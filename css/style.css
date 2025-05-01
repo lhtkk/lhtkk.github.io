@@ -1,34 +1,48 @@
+/* 鼠标烟花效果 */
 .trail {
   position: absolute;
-  width: 10px;  /* 更小的宽度 */
-  height: 10px; /* 更小的高度 */
-  border-radius: 50%;  /* 圆形 */
+  width: 8px; /* 小圆形大小 */
+  height: 8px;
+  border-radius: 50%;
   pointer-events: none; /* 不拦截鼠标事件 */
-  transform: translate(-50%, -50%);  /* 保证效果在鼠标位置居中 */
-  z-index: 9999;  /* 确保效果在其他内容之上 */
-
-  background: linear-gradient(45deg, 
-    #ff0000,   /* 红色 */
-    #ff7f00,   /* 橙色 */
-    #ffff00,   /* 黄色 */
-    #00ff00,   /* 绿色 */
-    #0000ff,   /* 蓝色 */
-    #4b0082,   /* 靛蓝 */
-    #8b00ff    /* 紫色 */
-  ); /* 彩虹渐变背景 */
-  opacity: 0.8;  /* 初始透明度 */
-  animation: trail-animation 0.5s forwards;  /* 添加动画 */
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  animation: fireworks 0.5s forwards;
 }
 
-/* 设置动画效果：渐变的球从小到大并消失 */
-@keyframes trail-animation {
+@keyframes fireworks {
   0% {
-    transform: scale(1);  /* 初始大小 */
-    opacity: 1;  /* 完全不透明 */
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(3) translate(-50%, -50%);
+    opacity: 0.5;
   }
   100% {
-    transform: scale(1.5);  /* 增大效果 */
-    opacity: 0;  /* 渐变消失 */
+    transform: scale(5) translate(-50%, -50%);
+    opacity: 0;
+  }
+}
+
+/* 背景下雪效果 */
+.snow {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.8;
+  animation: snow-fall 5s linear infinite;
+}
+
+@keyframes snow-fall {
+  0% {
+    transform: translateY(-100px); /* 从屏幕上方开始 */
+  }
+  100% {
+    transform: translateY(100vh); /* 向下落 */
   }
 }
 
