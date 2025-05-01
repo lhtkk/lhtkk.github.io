@@ -23,23 +23,30 @@ document.addEventListener('mousemove', function(e) {
 });
 
 // 背景下雪效果
+// 背景下雪效果
 function createSnow() {
   const snowflake = document.createElement('div');
   snowflake.className = 'snow';
-  
-  // 随机生成雪花的位置和动画速度
-  snowflake.style.left = Math.random() * 100 + 'vw';  // 横向随机位置
-  snowflake.style.animationDuration = Math.random() * 5 + 5 + 's'; // 随机下落速度
 
-  // 添加到页面中
+  // 随机生成雪花的位置（水平位置）
+  const randomLeft = Math.random(); // 随机生成 0-1 的值，表示横向位置
+  snowflake.style.setProperty('--random-left', randomLeft);
+
+  // 随机生成雪花的动画速度（下落时间）
+  snowflake.style.animationDuration = Math.random() * 5 + 5 + 's'; // 下落速度：5-10秒
+
+  // 随机生成雪花的大小
+  snowflake.style.width = Math.random() * 10 + 5 + 'px';  // 雪花宽度 5-15px
+  snowflake.style.height = snowflake.style.width;  // 保持雪花是圆形
+
+  // 将雪花添加到页面
   document.body.appendChild(snowflake);
 
   // 设置雪花在一定时间后移除
   setTimeout(() => {
     snowflake.remove();
-  }, 10000);  // 雪花会在10秒后被移除
+  }, 10000);  // 雪花会在10秒后消失
 }
 
 // 每隔一段时间生成雪花
 setInterval(createSnow, 100);  // 每100毫秒生成一个雪花
-
