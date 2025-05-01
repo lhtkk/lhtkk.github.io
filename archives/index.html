@@ -74,61 +74,67 @@
 
 
   
-   <!-- 音乐播放控制 -->
-  <audio id="background-music" loop>
-    <source src="/music/music.mp3" type="audio/mp3">
-    您的浏览器不支持音频播放。
-  </audio>
+  <body>
+  <!-- 音乐播放器 -->
+  <div class="music-player">
+    <button id="play-button" class="play-btn">
+      <i class="fa fa-play"></i> 播放
+    </button>
+    <audio id="background-music" loop>
+      <source src="/music/music.mp3" type="audio/mp3">
+      您的浏览器不支持音频播放。
+    </audio>
+  </div>
 
-  <!-- 音乐控制按钮 -->
-  <button id="play-pause-button" title="点击播放/暂停音乐">
-    <i class="fas fa-music"></i> <!-- Font Awesome 音乐图标 -->
-  </button>
-
-  <!-- 音乐控制脚本 -->
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('play-button').addEventListener('click', function() {
       var audio = document.getElementById('background-music');
-      var playPauseButton = document.getElementById('play-pause-button');
+      var playButton = document.getElementById('play-button');
 
-      // 初始状态：播放
-      var isPlaying = false;
-
-      // 点击按钮播放或暂停音频
-      playPauseButton.addEventListener('click', function() {
-        if (isPlaying) {
-          audio.pause();
-          playPauseButton.innerHTML = '<i class="fas fa-music"></i>'; // 显示音乐图标
-          isPlaying = false;
-        } else {
-          audio.play();
-          playPauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // 显示暂停图标
-          isPlaying = true;
-        }
-      });
+      if (audio.paused) {
+        audio.play();
+        playButton.innerHTML = '<i class="fa fa-pause"></i> 暂停';
+      } else {
+        audio.pause();
+        playButton.innerHTML = '<i class="fa fa-play"></i> 播放';
+      }
     });
   </script>
 
-  <!-- 添加一些样式 -->
   <style>
-    #play-pause-button {
-      background-color: transparent;
-      border: none;
-      font-size: 30px;
-      color: #fff;
-      cursor: pointer;
+    /* 音乐播放器容器 */
+    .music-player {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
+      top: 20px;  /* 距离顶部 20px */
+      right: 20px; /* 距离右边 20px */
+      z-index: 9999;  /* 确保播放器在页面最上层 */
+      display: flex;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.7); /* 背景半透明 */
+      border-radius: 8px;
+      padding: 10px;
     }
 
-    #play-pause-button i {
-      transition: transform 0.3s ease;
+    /* 播放按钮 */
+    .play-btn {
+      background: none;
+      color: white;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      font-family: "Arial", sans-serif;
     }
 
-    #play-pause-button:hover i {
-      transform: scale(1.2);
+    .play-btn i {
+      margin-right: 10px;
+    }
+
+    .play-btn:hover {
+      color: #ff6b6b;
+    }
+
+    .play-btn:focus {
+      outline: none;
     }
   </style>
   <script src="/js/mouse-effect.js"></script>
