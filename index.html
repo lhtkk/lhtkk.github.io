@@ -227,15 +227,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2025/05/01/output/" target="_self">
+        <a href="/2025/05/01/docker-compose_%E5%AE%9E%E7%8E%B0redis%E4%B8%80%E4%B8%BB%E5%A4%9A%E4%BB%8E+%E5%93%A8%E5%85%B5%E9%AB%98%E5%8F%AF%E7%94%A8_docker_compose%E9%83%A8%E7%BD%B2redis%E4%B8%80%E4%B8%BB%E5%A4%9A%E4%BB%8E-CSDN%E5%8D%9A%E5%AE%A2/" target="_self">
           
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/01/output/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/01/docker-compose_%E5%AE%9E%E7%8E%B0redis%E4%B8%80%E4%B8%BB%E5%A4%9A%E4%BB%8E+%E5%93%A8%E5%85%B5%E9%AB%98%E5%8F%AF%E7%94%A8_docker_compose%E9%83%A8%E7%BD%B2redis%E4%B8%80%E4%B8%BB%E5%A4%9A%E4%BB%8E-CSDN%E5%8D%9A%E5%AE%A2/" target="_self">
         <div>
-          istio实现灰度发布最新推荐文章于 2025-04-30 11:28:26 发布  孤独的∛ 最新推荐文章于2025-04-30 11:28:26 发布  阅读量381收藏 1  点赞数13 文章标签：istiojava数据结构 版权声明：本文为博主原创文章，遵循[ CC 4.0 BY-SA ](http://creativecommons.org/licenses/by-sa&#x2F;4.0
+          主从的原理就是 从节点向主节点发送一个syn请求 主节点收到请求 在后台创建一个rdb快照文件发送给从节点 ，再在暂存空间记录创建到发送完成这段时间的所有写命令，等rdb发送完成再发送写命令 从节点加载rdb和写命令完成主从同步  哨兵就是通过ping 如果通不了了 就会告知其他的哨兵 都发现ping不了了则标记下线 选举出新的主节点 !! 直接开整 首先最简单的 直接配置不用docker的操作m
         </div>
       </a>
 
@@ -243,40 +243,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2025-05-01 14:14" pubdate>
-              2025-05-01
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2025/05/01/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" target="_self">
-          
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/01/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" target="_self">
-        <div>
-          1.公网服务器（服务端s端）123456789101112#cat frps.ini [common]bindPort = 7000vhostHTTPPort = 8080 # 访问公网ip跳转到 内网的哪个ip[ssh]type = tcpremote_port = 6001   # 公网端口 6001，用于外部访问local_ip = 127.0.0.1 # 本地的 SSH 地址local_p
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2025-05-01 13:22" pubdate>
+            <time datetime="2025-05-01 14:59" pubdate>
               2025-05-01
             </time>
           </div>
@@ -315,67 +282,6 @@
           </div>
         
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h2 class="index-header">
-        
-        <a href="/2021/08/20/istio%E5%AE%9E%E7%8E%B0%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/" target="_self">
-          blogTest
-        </a>
-      </h2>
-
-      
-      <a class="index-excerpt index-excerpt__noimg" href="/2021/08/20/istio%E5%AE%9E%E7%8E%B0%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/" target="_self">
-        <div>
-          istio实现灰度发布istio实现灰度发布 准备工作安装istio curl -L https://istio.io/downloadIstio | sh -cd istio-1.*export PATH&#x3D;$PWD&#x2F;bin:$PATH安装istio基础组件 istioctl install –set profile&#x3D;demo -y验证是否成功 kubectl get
-        </div>
-      </a>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-08-20 18:07" pubdate>
-              2021-08-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3 d-flex align-items-center">
-            <i class="iconfont icon-category"></i>
-            
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/blog1/" class="category-chain-item">blog1</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Test/">#Test</a>
-            
-          </div>
         
       </div>
     </article>
