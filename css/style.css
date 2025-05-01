@@ -1,21 +1,25 @@
 .trail {
   position: absolute;
-  width: 15px;  /* 增加效果的大小 */
-  height: 15px;
-  border-radius: 50%;
-  pointer-events: none; /* 不让鼠标效果遮挡页面上的点击操作 */
-  transform: translate(-50%, -50%);  /* 使得鼠标效果居中 */
-  z-index: 9999;  /* 确保效果位于页面元素之上 */
+  width: 15px;  /* 鼠标效果的宽度 */
+  height: 15px; /* 鼠标效果的高度 */
+  border-radius: 50%;  /* 使其变圆形 */
+  pointer-events: none; /* 不拦截点击事件 */
+  transform: translate(-50%, -50%);  /* 保证效果在鼠标位置居中 */
+  z-index: 9999;  /* 确保效果不会被其他内容遮挡 */
+
+  background: linear-gradient(45deg, #ff007f, #6a5acd); /* 渐变色背景，从粉色到紫色 */
+  opacity: 0.8;  /* 初始不完全透明 */
   animation: trail-animation 0.5s forwards;  /* 设置动画 */
 }
 
+/* 动画效果：从小到大并逐渐消失 */
 @keyframes trail-animation {
   0% {
-    transform: scale(1);  /* 初始大小 */
-    opacity: 1;  /* 初始不透明 */
+    transform: scale(1);  /* 初始状态大小 */
+    opacity: 1;  /* 初始完全不透明 */
   }
   100% {
-    transform: scale(2);  /* 放大效果 */
+    transform: scale(2);  /* 动画结束时放大 */
     opacity: 0;  /* 渐变消失 */
   }
 }
