@@ -19,21 +19,22 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="istio实现灰度发布istio实现灰度发布 准备工作安装istio curl -L https:&#x2F;&#x2F;istio.io&#x2F;downloadIstio | sh -cd istio-1.*export PATH&#x3D;$PWD&#x2F;bin:$PATH安装istio基础组件 istioctl install –set profile&#x3D;demo -y验证是否成功 kubectl get">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://www.tiantian123.asia/2025/05/01/hello-world/index.html">
+<meta property="og:title" content="blogTest">
+<meta property="og:url" content="https://www.tiantian123.asia/2021/08/20/istio%E5%AE%9E%E7%8E%B0%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="istio实现灰度发布istio实现灰度发布 准备工作安装istio curl -L https:&#x2F;&#x2F;istio.io&#x2F;downloadIstio | sh -cd istio-1.*export PATH&#x3D;$PWD&#x2F;bin:$PATH安装istio基础组件 istioctl install –set profile&#x3D;demo -y验证是否成功 kubectl get">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-05-01T04:49:30.678Z">
-<meta property="article:modified_time" content="2025-05-01T04:49:30.678Z">
+<meta property="article:published_time" content="2021-08-20T10:07:21.000Z">
+<meta property="article:modified_time" content="2025-05-01T06:47:02.773Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Test">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>Hello World - Hexo</title>
+  <title>blogTest - Hexo</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +200,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Hello World"></span>
+            <span id="subtitle" data-typed-text="blogTest"></span>
           
         </div>
 
@@ -210,8 +211,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-01 12:49" pubdate>
-          May 1, 2025 pm
+        <time datetime="2021-08-20 18:07" pubdate>
+          August 20, 2021 pm
         </time>
       </span>
     
@@ -222,7 +223,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          18 words
+          526 words
         
       </span>
     
@@ -233,7 +234,7 @@
         
         
         
-          1 mins
+          5 mins
         
       </span>
     
@@ -270,24 +271,64 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Hello World</h1>
+            <h1 id="seo-header">blogTest</h1>
             
             
               <div class="markdown-body">
                 
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <h1 id="istio实现灰度发布"><a href="#istio实现灰度发布" class="headerlink" title="istio实现灰度发布"></a>istio实现灰度发布</h1><p>istio实现灰度发布</p>
+<p>准备工作<br>安装istio</p>
+<h1 id="curl-L-https-istio-io-downloadIstio-sh"><a href="#curl-L-https-istio-io-downloadIstio-sh" class="headerlink" title="curl -L https://istio.io/downloadIstio | sh -"></a>curl -L <a target="_blank" rel="noopener" href="https://istio.io/downloadIstio">https://istio.io/downloadIstio</a> | sh -</h1><h1 id="cd-istio-1"><a href="#cd-istio-1" class="headerlink" title="cd istio-1.*"></a>cd istio-1.*</h1><h1 id="export-PATH-PWD-bin-PATH"><a href="#export-PATH-PWD-bin-PATH" class="headerlink" title="export PATH&#x3D;$PWD&#x2F;bin:$PATH"></a>export PATH&#x3D;$PWD&#x2F;bin:$PATH</h1><p>安装istio基础组件</p>
+<h1 id="istioctl-install-–set-profile-demo-y"><a href="#istioctl-install-–set-profile-demo-y" class="headerlink" title="istioctl install –set profile&#x3D;demo -y"></a>istioctl install –set profile&#x3D;demo -y</h1><p>验证是否成功</p>
+<h1 id="kubectl-get-pods-n-istio-system"><a href="#kubectl-get-pods-n-istio-system" class="headerlink" title="kubectl get pods -n istio-system"></a>kubectl get pods -n istio-system</h1><p>对istio这个namespace自动注入</p>
+<h1 id="kubectl-label-namespace-default-istio-injection-enabled"><a href="#kubectl-label-namespace-default-istio-injection-enabled" class="headerlink" title="kubectl label namespace default istio-injection&#x3D;enabled"></a>kubectl label namespace default istio-injection&#x3D;enabled</h1><p>1.创建两个deploy 分别让他们指向 c1 和 c2</p>
+<h1 id="cat-01-deploy-yaml"><a href="#cat-01-deploy-yaml" class="headerlink" title="cat 01.deploy.yaml"></a>cat 01.deploy.yaml</h1><p>apiVersion: apps&#x2F;v1<br>kind: Deployment<br>metadata:<br>  name: apps-v1<br>  namespace: istio<br>spec:<br>  replicas: 1<br>  selector:<br>    matchLabels:<br>      app: istio<br>      version: v1<br>  template:<br>    metadata:<br>      labels:<br>        app: istio<br>        version: v1<br>    spec:<br>      containers:<br>      - name: c1<br>        ports:<br>        - containerPort: 80<br>        image: 192.168.85.128&#x2F;nb&#x2F;nginx:latest<br>        command: [“&#x2F;bin&#x2F;sh”, “-c”, “echo ‘c1’ &gt; &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html &amp;&amp; nginx -g ‘daemon off;’”]</p>
+<hr>
+<p>apiVersion: apps&#x2F;v1<br>kind: Deployment<br>metadata:<br>  name: apps-v2<br>  namespace: istio<br>spec:<br>  replicas: 1<br>  selector:<br>    matchLabels:<br>      app: istio<br>      version: v2<br>  template:<br>    metadata:<br>      labels:<br>        app: istio<br>        version: v2<br>    spec:<br>      containers:<br>      - name: c2<br>        ports:<br>        - containerPort: 80<br>        image: 192.168.85.128&#x2F;nb&#x2F;nginx:latest<br>        command: [“&#x2F;bin&#x2F;sh”, “-c”, “echo ‘c2’ &gt; &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html &amp;&amp; nginx -g ‘daemon off;’”]</p>
+<ol start="2">
+<li>定义一个svc让能负载到这两个deploy</li>
+</ol>
+<h1 id="cat-02-svc-yaml"><a href="#cat-02-svc-yaml" class="headerlink" title="cat 02.svc.yaml"></a>cat 02.svc.yaml</h1><p>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: apps-svc-all<br>  namespace: istio<br>spec:<br>  selector:<br>    #关联两个版本<br>    app: istio<br>  ports:</p>
+<ul>
+<li>protocol: TCP<br>port: 80<br>targetPort: 80<br>name: http</li>
+</ul>
+<p>3.定义一个组</p>
+<h1 id="cat-03-rule-yaml"><a href="#cat-03-rule-yaml" class="headerlink" title="cat 03.rule.yaml"></a>cat 03.rule.yaml</h1><p>apiVersion: networking.istio.io&#x2F;v1beta1<br>kind: DestinationRule<br>metadata:<br>  name: rule<br>  namespace: istio<br>spec:<br>  host: apps-svc-all   #匹配svc的name<br>  subsets:</p>
+<ul>
+<li>name: v1<br>labels:<br>  version: v1     #匹配deploy下面的pod的标签 分成v1，v2两个组</li>
+<li>name: v2<br>labels:<br>  version: v2<br>4.给两个实例分权重</li>
+</ul>
+<h1 id="cat-04-vs-yaml"><a href="#cat-04-vs-yaml" class="headerlink" title="cat 04.vs.yaml"></a>cat 04.vs.yaml</h1><p>apiVersion: networking.istio.io&#x2F;v1beta1<br>kind: VirtualService<br>metadata:<br>  name: vs<br>  namespace: istio<br>spec:<br>  hosts:</p>
+<ul>
+<li>apps-svc-all   #匹配svc的名字<br>  http:</li>
+<li>route:<ul>
+<li>destination:<br>  host: apps-svc-all<br>  subset: v1<br>weight: 90</li>
+<li>destination:<br>  host: apps-svc-all<br>  subset: v2<br>weight: 10<br>5.测试</li>
+</ul>
+</li>
+</ul>
+<h1 id="kubectl-exec-it-apps-v1-86d85445dc-hgzpm-n-istio-–-bash"><a href="#kubectl-exec-it-apps-v1-86d85445dc-hgzpm-n-istio-–-bash" class="headerlink" title="kubectl exec -it apps-v1-86d85445dc-hgzpm -n istio  – bash"></a>kubectl exec -it apps-v1-86d85445dc-hgzpm -n istio  – bash</h1><h1 id="while-true-do-curl-apps-svc-all-a-txt-sleep-0-1s-done"><a href="#while-true-do-curl-apps-svc-all-a-txt-sleep-0-1s-done" class="headerlink" title="while true;do curl apps-svc-all &gt;&gt;a.txt;sleep 0.1s;done"></a>while true;do curl apps-svc-all &gt;&gt;a.txt;sleep 0.1s;done</h1><h1 id="cat-a-txt-sort-uniq-c"><a href="#cat-a-txt-sort-uniq-c" class="headerlink" title="cat a.txt|sort|uniq -c"></a>cat a.txt|sort|uniq -c</h1><pre><code class="hljs"> 55 c1
+  5 c2
+</code></pre>
+<p>6.请求头划分权限 带istio的都请求v1<br>#cat 05.vs.yaml<br>apiVersion: networking.istio.io&#x2F;v1beta1<br>kind: VirtualService<br>metadata:<br>  name: vs2<br>  namespace: istio<br>spec:<br>  hosts:</p>
+<ul>
+<li>apps-svc-all<br>  http:<h1 id="定义匹配规则"><a href="#定义匹配规则" class="headerlink" title="定义匹配规则"></a>定义匹配规则</h1></li>
+<li>match:<h1 id="基于header信息匹配将其进行路由，header信息自定义即可。"><a href="#基于header信息匹配将其进行路由，header信息自定义即可。" class="headerlink" title="基于header信息匹配将其进行路由，header信息自定义即可。"></a>基于header信息匹配将其进行路由，header信息自定义即可。</h1><ul>
+<li>headers:<h1 id="匹配用户名包含”istio”的用户，这个KEY是咱们自定义的。"><a href="#匹配用户名包含”istio”的用户，这个KEY是咱们自定义的。" class="headerlink" title="匹配用户名包含”istio”的用户，这个KEY是咱们自定义的。"></a>匹配用户名包含”istio”的用户，这个KEY是咱们自定义的。</h1>  username:<br># “eaxct”关键词是包含，也可以使用”prefix”进行前缀匹配。<br>exact: istio</li>
+</ul>
+<p>route:</p>
+<ul>
+<li>destination:<br>  host: apps-svc-all<br>  subset: v1</li>
+</ul>
+</li>
+<li>route: <ul>
+<li>destination:<br>  host: apps-svc-all<br>  subset: v2</li>
+</ul>
+</li>
+</ul>
+<p>7.可视化kiali</p>
+<h1 id="cd-istio-1-25-2"><a href="#cd-istio-1-25-2" class="headerlink" title="cd istio-1.25.2"></a>cd istio-1.25.2</h1><h1 id="kubectl-apply-f-samples-addons"><a href="#kubectl-apply-f-samples-addons" class="headerlink" title="kubectl apply -f samples&#x2F;addons"></a>kubectl apply -f samples&#x2F;addons</h1><h1 id="kubectl-apply-f-samples-addons-extras"><a href="#kubectl-apply-f-samples-addons-extras" class="headerlink" title="kubectl apply -f samples&#x2F;addons&#x2F;extras"></a>kubectl apply -f samples&#x2F;addons&#x2F;extras</h1><p>配置Kiali控制面板对外访问<br>查看kiali服务，发现其类型为ClusterIP，没有对外暴露端口，无法从外部访问：将类型改NodePort</p>
+<h1 id="kubectl-n-istio-system-get-svc"><a href="#kubectl-n-istio-system-get-svc" class="headerlink" title="kubectl -n istio-system get svc"></a>kubectl -n istio-system get svc</h1><p>kiali                  NodePort       10.99.64.99      <none>        20001:30021&#x2F;TCP,9090:30830&#x2F;TCP<br>访问ip:30021即可</p>
 
                 
               </div>
@@ -296,6 +337,34 @@
             <div>
               <div class="post-metas my-3">
   
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/blog1/" class="category-chain-item">blog1</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Test/" class="print-no-link">#Test</a>
+      
+    </div>
   
 </div>
 
@@ -305,8 +374,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Hello World</div>
-      <div>https://www.tiantian123.asia/2025/05/01/hello-world/</div>
+      <div>blogTest</div>
+      <div>https://www.tiantian123.asia/2021/08/20/istio实现灰度发布/</div>
     </div>
     <div class="license-meta">
       
@@ -318,7 +387,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>Posted on</div>
-          <div>May 1, 2025</div>
+          <div>August 20, 2021</div>
         </div>
       
       
@@ -350,21 +419,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/01/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" title="">
+                      <a href="/2025/05/01/hello-world/" title="Hello World">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile"></span>
+                        <span class="hidden-mobile">Hello World</span>
                         <span class="visible-mobile">Previous</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2021/08/20/istio%E5%AE%9E%E7%8E%B0%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83/" title="blogTest">
-                        <span class="hidden-mobile">blogTest</span>
-                        <span class="visible-mobile">Next</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
