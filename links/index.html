@@ -74,6 +74,51 @@
 
 
   
+    <!-- 自动播放背景音乐 -->
+  <audio id="background-music" autoplay loop>
+    <source src="/music/music.mp3" type="audio/mp3">
+    您的浏览器不支持音频播放。
+  </audio>
+
+  <!-- 播放按钮 -->
+  <button id="play-button" style="display:none;">点击播放音乐</button>
+
+  <!-- 提示信息 -->
+  <p id="audio-info" style="display:none; color: red;">自动播放被浏览器阻止，请点击上面的按钮来播放音乐。</p>
+
+  <!-- 处理自动播放 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var audio = document.getElementById('background-music');
+      var playButton = document.getElementById('play-button');
+      var audioInfo = document.getElementById('audio-info');
+
+      // 尝试自动播放
+      audio.play().then(function() {
+        console.log("音频自动播放成功");
+      }).catch(function(error) {
+        console.log("自动播放被阻止:", error);
+        // 显示播放按钮和提示信息
+        playButton.style.display = 'block';
+        audioInfo.style.display = 'block';
+      });
+
+      // 点击按钮播放音频
+      playButton.addEventListener('click', function() {
+        audio.play().then(function() {
+          console.log("音频播放成功");
+          playButton.style.display = 'none';  // 隐藏播放按钮
+          audioInfo.style.display = 'none';   // 隐藏提示信息
+        }).catch(function(error) {
+          console.log("点击播放失败:", error);
+        });
+      });
+
+      // 可选：音量控制
+      audio.volume = 0.5;  // 设置音量为50%
+    });
+  </script>
+
   <script src="/js/mouse-effect.js"></script>
   <link rel="stylesheet" href="/css/style.css">
 <meta name="generator" content="Hexo 7.3.0"></head>
