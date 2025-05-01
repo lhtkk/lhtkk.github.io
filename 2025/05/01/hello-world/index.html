@@ -84,53 +84,68 @@
 
 
   
-    <!-- 自动播放背景音乐 -->
-  <audio id="background-music" autoplay loop>
-    <source src="/music/music.mp3" type="audio/mp3">
+   <!-- 音乐播放控制 -->
+  <audio id="background-music" loop>
+    <source src="/music/background-music.mp3" type="audio/mp3">
     您的浏览器不支持音频播放。
   </audio>
 
-  <!-- 播放按钮 -->
-  <button id="play-button" style="display:none;">点击播放音乐</button>
+  <!-- 音乐控制按钮 -->
+  <button id="play-pause-button" title="点击播放/暂停音乐">
+    <i class="fas fa-music"></i> <!-- Font Awesome 音乐图标 -->
+  </button>
 
-  <!-- 提示信息 -->
-  <p id="audio-info" style="display:none; color: red;">自动播放被浏览器阻止，请点击上面的按钮来播放音乐。</p>
-
-  <!-- 处理自动播放 -->
+  <!-- 音乐控制脚本 -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       var audio = document.getElementById('background-music');
-      var playButton = document.getElementById('play-button');
-      var audioInfo = document.getElementById('audio-info');
+      var playPauseButton = document.getElementById('play-pause-button');
 
-      // 尝试自动播放
-      audio.play().then(function() {
-        console.log("音频自动播放成功");
-      }).catch(function(error) {
-        console.log("自动播放被阻止:", error);
-        // 显示播放按钮和提示信息
-        playButton.style.display = 'block';
-        audioInfo.style.display = 'block';
+      // 初始状态：播放
+      var isPlaying = false;
+
+      // 点击按钮播放或暂停音频
+      playPauseButton.addEventListener('click', function() {
+        if (isPlaying) {
+          audio.pause();
+          playPauseButton.innerHTML = '<i class="fas fa-music"></i>'; // 显示音乐图标
+          isPlaying = false;
+        } else {
+          audio.play();
+          playPauseButton.innerHTML = '<i class="fas fa-pause"></i>'; // 显示暂停图标
+          isPlaying = true;
+        }
       });
-
-      // 点击按钮播放音频
-      playButton.addEventListener('click', function() {
-        audio.play().then(function() {
-          console.log("音频播放成功");
-          playButton.style.display = 'none';  // 隐藏播放按钮
-          audioInfo.style.display = 'none';   // 隐藏提示信息
-        }).catch(function(error) {
-          console.log("点击播放失败:", error);
-        });
-      });
-
-      // 可选：音量控制
-      audio.volume = 0.5;  // 设置音量为50%
     });
   </script>
 
+  <!-- 添加一些样式 -->
+  <style>
+    #play-pause-button {
+      background-color: transparent;
+      border: none;
+      font-size: 30px;
+      color: #fff;
+      cursor: pointer;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+
+    #play-pause-button i {
+      transition: transform 0.3s ease;
+    }
+
+    #play-pause-button:hover i {
+      transform: scale(1.2);
+    }
+  </style>
   <script src="/js/mouse-effect.js"></script>
   <link rel="stylesheet" href="/css/style.css">
+  <!-- 引入 Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 
