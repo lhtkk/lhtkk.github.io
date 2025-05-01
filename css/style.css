@@ -1,20 +1,22 @@
 .trail {
   position: absolute;
-  width: 12px;
-  height: 12px;
+  width: 15px;  /* 增加效果的大小 */
+  height: 15px;
   border-radius: 50%;
-  pointer-events: none;
-  animation: trail-animation 0.6s ease-out forwards;
+  pointer-events: none; /* 不让鼠标效果遮挡页面上的点击操作 */
+  transform: translate(-50%, -50%);  /* 使得鼠标效果居中 */
+  z-index: 9999;  /* 确保效果位于页面元素之上 */
+  animation: trail-animation 0.5s forwards;  /* 设置动画 */
 }
 
 @keyframes trail-animation {
   0% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scale(1);  /* 初始大小 */
+    opacity: 1;  /* 初始不透明 */
   }
   100% {
-    transform: scale(0);
-    opacity: 0;
+    transform: scale(2);  /* 放大效果 */
+    opacity: 0;  /* 渐变消失 */
   }
 }
 
