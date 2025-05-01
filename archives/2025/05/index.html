@@ -101,6 +101,33 @@
     });
   </script>
 
+  <body>
+  <!-- 音乐播放器 -->
+  <div class="music-player">
+    <button id="play-button" class="play-btn">
+      <i class="fas fa-music"></i> 播放
+    </button>
+    <audio id="background-music" loop>
+      <source src="/music/music.mp3" type="audio/mp3">
+      您的浏览器不支持音频播放。
+    </audio>
+  </div>
+
+  <script>
+    document.getElementById('play-button').addEventListener('click', function() {
+      var audio = document.getElementById('background-music');
+      var playButton = document.getElementById('play-button');
+
+      if (audio.paused) {
+        audio.play();
+        playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停';
+      } else {
+        audio.pause();
+        playButton.innerHTML = '<i class="fas fa-music"></i> 播放';
+      }
+    });
+  </script>
+
   <style>
     /* 音乐播放器容器 */
     .music-player {
@@ -120,7 +147,7 @@
       background: none;
       color: white;
       border: none;
-      font-size: 20px;
+      font-size: 30px; /* 增大图标 */
       cursor: pointer;
       font-family: "Arial", sans-serif;
     }
@@ -137,6 +164,7 @@
       outline: none;
     }
   </style>
+</body>
   <script src="/js/mouse-effect.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <!-- 引入 Font Awesome -->
