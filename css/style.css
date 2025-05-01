@@ -26,26 +26,27 @@
 }
 
 /* 背景下雪效果 */
-/* 背景下雪效果 */
+/* 全屏幕雪花效果 */
 .snow {
   position: absolute;
-  width: 10px;  /* 设置雪花大小 */
+  width: 10px;  /* 设置雪花的大小 */
   height: 10px;
   background-color: #fff;
   border-radius: 50%;
   pointer-events: none;
   opacity: 0.8;
-  z-index: 9999;  /* 设置较高的 z-index 确保雪花在最上层 */
+  z-index: 9999;  /* 确保雪花在最上层 */
   animation: snow-fall linear infinite;
 }
 
-/* 雪花从屏幕的顶部随机位置开始下落 */
+/* 雪花的下落动画 */
 @keyframes snow-fall {
   0% {
-    transform: translateY(-10px); /* 从屏幕顶部开始 */
-    left: calc(100% * var(--random-left));  /* 横向随机位置 */
+    top: -10px;  /* 从屏幕顶部开始 */
+    left: calc(100% * var(--random-left));  /* 雪花的水平位置随机 */
   }
   100% {
-    transform: translateY(100vh); /* 向下落到屏幕底部 */
+    top: 100vh;  /* 向下落到屏幕底部 */
   }
 }
+
