@@ -1,0 +1,1073 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="istio实现灰度发布最新推荐文章于 2025-04-30 11:28:26 发布  孤独的∛ 最新推荐文章于2025-04-30 11:28:26 发布  阅读量381收藏 1  点赞数13 文章标签：istiojava数据结构 版权声明：本文为博主原创文章，遵循[ CC 4.0 BY-SA ](http:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-sa&#x2F;4.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/2025/05/01/output/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="istio实现灰度发布最新推荐文章于 2025-04-30 11:28:26 发布  孤独的∛ 最新推荐文章于2025-04-30 11:28:26 发布  阅读量381收藏 1  点赞数13 文章标签：istiojava数据结构 版权声明：本文为博主原创文章，遵循[ CC 4.0 BY-SA ](http:&#x2F;&#x2F;creativecommons.org&#x2F;licenses&#x2F;by-sa&#x2F;4.0">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/newCurrentTime2.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png">
+<meta property="og:image" content="https://i-avatar.csdnimg.cn/18a684d63cdf4e6ba4df0fba2b089ead_a2801359697.jpg!1">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://i-avatar.csdnimg.cn/18a684d63cdf4e6ba4df0fba2b089ead_a2801359697.jpg!1">
+<meta property="og:image" content="https://csdnimg.cn/identity/blog2.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowLeftWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/iconPark.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward02.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward03.png">
+<meta property="og:image" content="https://profile-avatar.csdnimg.cn/default.jpg!2">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png">
+<meta property="og:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png">
+<meta property="og:image" content="http://example.com/">
+<meta property="article:published_time" content="2025-05-01T06:14:55.569Z">
+<meta property="article:modified_time" content="2025-05-01T06:14:37.802Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png">
+  
+  
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text=""></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-01 14:14" pubdate>
+          May 1, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header"></h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="istio实现灰度发布"><a href="#istio实现灰度发布" class="headerlink" title="istio实现灰度发布"></a>istio实现灰度发布</h1><p>最新推荐文章于 2025-04-30 11:28:26 发布</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/original.png" srcset="/img/loading.gif" lazyload></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697" title="孤独的∛">孤独的∛</a><br><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCurrentTime2.png" srcset="/img/loading.gif" lazyload> 最新推荐文章于<br>2025-04-30 11:28:26 发布</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/articleReadEyes2.png" srcset="/img/loading.gif" lazyload> 阅读量381<br><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollect2.png" srcset="/img/loading.gif" lazyload><br><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarCollectionActive2.png" srcset="/img/loading.gif" lazyload><br>收藏 1</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Active.png" srcset="/img/loading.gif" lazyload><br><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newHeart2023Black.png" srcset="/img/loading.gif" lazyload> 点赞数<br>13</p>
+<p>文章标签：<br><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search/s.do?q=istio&t=all&o=vip&s=&l=&f=&viparticle=&from_tracking_code=tag_word&from_code=app_blog_art">istio</a><br><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search/s.do?q=java&t=all&o=vip&s=&l=&f=&viparticle=&from_tracking_code=tag_word&from_code=app_blog_art">java</a><br><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search/s.do?q=%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84&t=all&o=vip&s=&l=&f=&viparticle=&from_tracking_code=tag_word&from_code=app_blog_art">数据结构</a></p>
+<p>版权声明：本文为博主原创文章，遵循[ CC 4.0 BY-SA ](<a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-">http://creativecommons.org/licenses/by-</a><br>sa&#x2F;4.0&#x2F;)版权协议，转载请附上原文出处链接和本声明。</p>
+<p>本文链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/147377677">https://blog.csdn.net/a2801359697/article/details/147377677</a></p>
+<p>版权</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="安装istio"><a href="#安装istio" class="headerlink" title="安装istio"></a>安装istio</h3><pre><code class="hljs"># curl -L https://istio.io/downloadIstio | sh -
+# cd istio-1.*
+# export PATH=$PWD/bin:$PATH
+安装istio基础组件
+# istioctl install --set profile=demo -y
+验证是否成功
+# kubectl get pods -n istio-system
+</code></pre>
+<h3 id="对istio这个namespace自动注入"><a href="#对istio这个namespace自动注入" class="headerlink" title="对istio这个namespace自动注入"></a>对istio这个namespace自动注入</h3><pre><code class="hljs"># kubectl label namespace default istio-injection=enabled
+</code></pre>
+<h2 id="1-创建两个deploy-分别让他们指向-c1-和-c2"><a href="#1-创建两个deploy-分别让他们指向-c1-和-c2" class="headerlink" title="1.创建两个deploy 分别让他们指向 c1 和 c2"></a>1.创建两个deploy 分别让他们指向 c1 和 c2</h2><pre><code class="hljs"># cat 01.deploy.yaml 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apps-v1
+  namespace: istio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: istio
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: istio
+        version: v1
+    spec:
+      containers:
+      - name: c1
+        ports:
+        - containerPort: 80
+        image: 192.168.85.128/nb/nginx:latest 
+        command: [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;echo &#39;c1&#39; &gt; /usr/share/nginx/html/index.html &amp;&amp; nginx -g &#39;daemon off;&#39;&quot;]
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apps-v2
+  namespace: istio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: istio
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: istio
+        version: v2
+    spec:
+      containers:
+      - name: c2
+        ports:
+        - containerPort: 80
+        image: 192.168.85.128/nb/nginx:latest 
+        command: [&quot;/bin/sh&quot;, &quot;-c&quot;, &quot;echo &#39;c2&#39; &gt; /usr/share/nginx/html/index.html &amp;&amp; nginx -g &#39;daemon off;&#39;&quot;]
+</code></pre>
+<h2 id="2-定义一个svc让能负载到这两个deploy"><a href="#2-定义一个svc让能负载到这两个deploy" class="headerlink" title="2. 定义一个svc让能负载到这两个deploy"></a>2. 定义一个svc让能负载到这两个deploy</h2><pre><code class="hljs"># cat 02.svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: apps-svc-all
+  namespace: istio
+spec:
+  selector:
+    #关联两个版本
+    app: istio 
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+    name: http
+</code></pre>
+<h2 id="3-定义一个组"><a href="#3-定义一个组" class="headerlink" title="3.定义一个组"></a>3.定义一个组</h2><pre><code class="hljs"># cat 03.rule.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: rule
+  namespace: istio
+spec:
+  host: apps-svc-all   #匹配svc的name
+  subsets:
+  - name: v1
+    labels:
+      version: v1     #匹配deploy下面的pod的标签 分成v1，v2两个组
+  - name: v2
+    labels:
+      version: v2
+</code></pre>
+<h2 id="4-给两个实例分权重"><a href="#4-给两个实例分权重" class="headerlink" title="4.给两个实例分权重"></a>4.给两个实例分权重</h2><pre><code class="hljs"># cat 04.vs.yaml
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: vs
+  namespace: istio
+spec:
+  hosts:
+  - apps-svc-all   #匹配svc的名字
+  http:
+  - route:
+    - destination:
+        host: apps-svc-all
+        subset: v1
+      weight: 90
+    - destination:
+        host: apps-svc-all
+        subset: v2
+      weight: 10
+</code></pre>
+<h2 id="5-测试"><a href="#5-测试" class="headerlink" title="5.测试"></a>5.测试</h2><pre><code class="hljs"># kubectl exec -it apps-v1-86d85445dc-hgzpm -n istio  -- bash
+# while true;do curl apps-svc-all &gt;&gt;a.txt;sleep 0.1s;done
+# cat a.txt|sort|uniq -c
+     55 c1
+      5 c2
+</code></pre>
+<h2 id="6-请求头划分权限-带istio的都请求v1"><a href="#6-请求头划分权限-带istio的都请求v1" class="headerlink" title="6.请求头划分权限 带istio的都请求v1"></a>6.请求头划分权限 带istio的都请求v1</h2><pre><code class="hljs">#cat 05.vs.yaml 
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: vs2
+  namespace: istio 
+spec:
+  hosts:
+  - apps-svc-all
+  http:
+    # 定义匹配规则
+  - match:
+      # 基于header信息匹配将其进行路由，header信息自定义即可。
+    - headers:
+        # 匹配用户名包含&quot;istio&quot;的用户，这个KEY是咱们自定义的。
+        username:
+          # &quot;eaxct&quot;关键词是包含，也可以使用&quot;prefix&quot;进行前缀匹配。
+          exact: istio 
+    route:
+    - destination:
+        host: apps-svc-all
+        subset: v1
+  - route: 
+    - destination:
+        host: apps-svc-all
+        subset: v2
+</code></pre>
+<h2 id="7-可视化kiali"><a href="#7-可视化kiali" class="headerlink" title="7.可视化kiali"></a>7.可视化kiali</h2><pre><code class="hljs"># cd istio-1.25.2
+# kubectl apply -f samples/addons
+# kubectl apply -f samples/addons/extras
+</code></pre>
+<p>配置Kiali控制面板对外访问</p>
+<p>查看kiali服务，发现其类型为ClusterIP，没有对外暴露端口，无法从外部访问：将类型改NodePort</p>
+<pre><code class="hljs"># kubectl -n istio-system get svc
+kiali                  NodePort       10.99.64.99      &lt;none&gt;        20001:30021/TCP,9090:30830/TCP   
+</code></pre>
+<p>访问ip:30021即可</p>
+<p>![](<a target="_blank" rel="noopener" href="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-">https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-</a><br>newWhite.png)</p>
+<p>确定要放弃本次机会？</p>
+<p>福利倒计时</p>
+<p><em>:</em> <em>:</em></p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/vip-limited-close-roup.png" srcset="/img/loading.gif" lazyload><br>立减 ¥</p>
+<p>普通VIP年卡可用</p>
+<p><a target="_blank" rel="noopener" href="https://mall.csdn.net/vip">立即使用</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697"><img src="https://i-avatar.csdnimg.cn/18a684d63cdf4e6ba4df0fba2b089ead_a2801359697.jpg!1" srcset="/img/loading.gif" lazyload><br>孤独的∛  </a></p>
+<p><a href="javascript:;">关注</a> 关注</p>
+<ul>
+<li><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/tobarThumbUpactive.png" srcset="/img/loading.gif" lazyload> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like-active.png" srcset="/img/loading.gif" lazyload> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/like.png" srcset="/img/loading.gif" lazyload> 13</li>
+</ul>
+<p>点赞</p>
+<ul>
+<li><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike-active.png" srcset="/img/loading.gif" lazyload> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/unlike.png" srcset="/img/loading.gif" lazyload></li>
+</ul>
+<p>踩</p>
+<ul>
+<li><a href="javascript:;"> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect-active.png" srcset="/img/loading.gif" lazyload> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/collect.png" srcset="/img/loading.gif" lazyload> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/newCollectActive.png" srcset="/img/loading.gif" lazyload> 1  </a></li>
+</ul>
+<p>收藏</p>
+<p>觉得还不错?  一键收藏<br><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/collectionCloseWhite.png" srcset="/img/loading.gif" lazyload></p>
+<ul>
+<li><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward01.png" srcset="/img/loading.gif" lazyload> 知道了</li>
+</ul>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/comment.png" srcset="/img/loading.gif" lazyload> 0</p>
+<p>评论</p>
+<ul>
+<li><a href="javascript:;"> <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/share.png" srcset="/img/loading.gif" lazyload> 分享 </a></li>
+</ul>
+<p>复制链接</p>
+<p>分享到 QQ</p>
+<p>分享到新浪微博</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/share/icon-wechat.png" srcset="/img/loading.gif" lazyload>扫一扫</p>
+<ul>
+<li><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/more.png" srcset="/img/loading.gif" lazyload></li>
+</ul>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" srcset="/img/loading.gif" lazyload> 举报</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/toolbar/report.png" srcset="/img/loading.gif" lazyload> 举报</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35029061/article/details/135903940"> <em>Istio</em> <em>灰度</em> <em>发布</em> 实战
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35029061">悦分享</a></p>
+<p>01-30 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>219</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_35029061/article/details/135903940"> 当应用上线以后，运维面临的一大挑战是如何能够在不影响已上线业务的情况下进行升级。做过产品的同学都清楚，不管在 <em>发布</em><br>前做过多么完备的自动化和人工测试，在 <em>发布</em> 后都会出现或多或少的故障。根据墨菲定律，可能会出错的版本 <em>发布</em><br>一定会出错。因此我们不能寄希望于在线下测试时发现所有潜在故障。在无法百分百避免版本升级故障的情况下，需要通过一种方式进行可控的版本 <em>发布</em><br>，把故障影响控制在可以接受的范围内，并可以快速回退。
+</a></p>
+<p>参与评论 您还未登录，请先 登录 后发表或查看评论</p>
+<p><a target="_blank" rel="noopener" href="https://jiangxl.blog.csdn.net/article/details/126641911"> <em>Istio</em> 服务网格进阶③：基于 <em>Istio</em> 服务网格 <em>实现</em> <em>灰度</em> <em>发布</em> 机制
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44953658">江晓龙的博客</a></p>
+<p>09-01 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1592</p>
+<p><a target="_blank" rel="noopener" href="https://jiangxl.blog.csdn.net/article/details/126641911"> <em>灰度</em> <em>发布</em><br>的例子：一个应用程序有2个版本，V1版本为线上生产环境的版本的，V2版本为即将上线的版，需要同时将两个版本的应用程序部署，并且全部接入到负载均衡中，通过<br><em>灰度</em> <em>发布</em><br>控制，V1版本承担90%的流量，V2版本承担10%的的流量，观察运行效果，循序渐进，最新V1版本下线，V2版本提供线上服务。Kubernetes集群的Pod程序版本升级的默认方式就是滚动<br><em>发布</em><br>，先运行一个新版本的Pod，健康检查机制通过后才会将旧版本的Pod删除，不断的执行这个过程，直到所有的Pod全部升级成新的版本为止。绑定hosts解析。.
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43606975/article/details/126644031"> <em>istio</em> 流量转移
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43606975"></a></p>
+<p>09-01 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>251</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43606975/article/details/126644031"> 访问：lb地址&#x2F;123 到tomcat。访问：lb地址&#x2F;123 到tomcat。访问：lb地址&#x2F; 到argo。访问：lb地址&#x2F; 到argo。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42515722/article/details/134332064"> <em>Istio</em> Sidecar流量拦截机制-Day02
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42515722">qq_42515722的博客</a></p>
+<p>11-17 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>729</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42515722/article/details/134332064"> 本章着重介绍了接入 <em>istio</em> 所必备的条件，以及sidecar流量拦截的过程。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ok875161027/article/details/73275039"> <em>Istio</em> 介绍 热门推荐
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ok875161027">阿仆的专栏</a></p>
+<p>06-15 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>2万+</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ok875161027/article/details/73275039"> <em>Istio</em> </a></p>
+<p><a target="_blank" rel="noopener" href="https://devpress.csdn.net/v1/article/detail/100512221"> <em>istio</em> 功能介绍（一. <em>Istio</em> 基本功能）
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34657543">llarao的博客</a></p>
+<p>05-20 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1万+</p>
+<p><a target="_blank" rel="noopener" href="https://devpress.csdn.net/v1/article/detail/100512221"> 文章目录基本原理 <em>istio</em><br>与服务治理关于微服务服务治理的三种形态第1种：在应用程序中包含治理逻辑第2种：治理逻辑独立的代码第3种：治理逻辑独立的进程 <em>Istio</em><br>与kubernetes <em>Istio</em> 的工作机制 <em>Istio</em> 的重要组件 <em>Istio</em> -pilot <em>istio</em> -Mixer <em>istio</em><br>-citadel <em>istio</em> -galley <em>istio</em> -sidecar-injector <em>istio</em> -proxy其他组件 本文内容很…
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45207474/article/details/112758614"> <em>Istio</em> <em>实现</em> <em>灰度</em> <em>发布</em>
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45207474">weixin_45207474的博客</a></p>
+<p>01-17 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1051</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45207474/article/details/112758614"> 系列文章目录 提示：这里可以添加系列文章的所有文章的目录，目录需要自己手动添加 例如：第一章 Python 机器学习入门之pandas的使用<br>提示：写完文章后，目录可以自动生成，如何生成可参考右边的帮助文档 文章目录系列文章目录前言一、pandas是什么？二、使用步骤1.引入库2.读入数据总结<br>前言 提示：这里可以添加本文要记录的大概内容：<br>例如：随着人工智能的不断发展，机器学习这门技术也越来越重要，很多人都开启了学习机器学习，本文就介绍了机器学习的基础内容。<br>提示：以下是本篇文章正文内容，下面案例
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25611295/article/details/116204075"> 四、 <em>Istio</em> <em>实现</em> <em>灰度</em> <em>发布</em>
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25611295">机器重启员的博客</a></p>
+<p>04-27 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>2982</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25611295/article/details/116204075"> <em>灰度</em> <em>发布</em> （金丝雀 <em>发布</em> ） 只升级部分服务，即让一部分用户继续用老版本，一 部分用户开始用新版本，如果用户对新版本没有什么<br>意见，那么逐步扩大范围，把所有用户都迁移到新版 本上面来。 特点： • 保证整体系统稳定性 • 用户无感知，平滑过渡 缺点： • 自动化要求高 <em>灰度</em><br><em>发布</em> （A&#x2F;B Test） <em>灰度</em> <em>发布</em> 的一种方式，主要对特定用户采样后，对收 集到的反馈数据做相关对比，然后根据比对结果作出<br>决策。用来测试应用功能表现的方法，侧重应用的可 用性，受欢迎程度等，最后决定是否升级。 这种 <em>发布</em> 方式主要是面向业务功能侧
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_69326428/article/details/145706939"> <em>istio</em> <em>实现</em> <em>灰度</em> <em>发布</em> ，A&#x2F;B <em>发布</em> ， Kiali网格可视化（二）
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_69326428">cherryの技术文档</a></p>
+<p>02-18 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1179</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_69326428/article/details/145706939"> 代码 <em>发布</em> 是软件开发生命周期中的一个重要环节，确保新功能和修复能够顺利上线。以下是几种常见的代码 <em>发布</em> 流程。在学习 <em>灰度</em> <em>发布</em><br>之前。我们首先回忆下代码 <em>发布</em> 常用的几种方法。蓝绿部署是一种通过维护两套独立的环境（蓝环境和绿环境）来 <em>实现</em><br>零停机时间发版的方法。当前版本（蓝）和新版本（绿）是完全独立的，在绿色环境通过验证后，流量被切换到绿色环境。**优点：<strong>对用户无感，是最安全的 <em>发布</em><br>方式，业务稳定</strong>缺点：**需要两套系统，对资源要求比较高，成本特别高按批次停止老版本实例，启动新版本实例。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Mrex326428/article/details/126958044"> 干货分享｜使用 <em>Istio</em> <em>实现</em> <em>灰度</em> <em>发布</em>
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Mrex326428">Mrex326428的博客</a></p>
+<p>09-20 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>804</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Mrex326428/article/details/126958044"> Kubernetes<br>作为基础平台，提供了强大的容器编排能力。但是在其上部署业务和服务治理上，仍然会面对一些复杂性和局限性。在服务治理上，已经有许多成熟的 ServiceMesh<br>框架用于扩充其能力，如 <em>Istio</em> 、Linkerd、Dapr 等。本文将主要介绍如何使用 <em>Istio</em> 扩充 Kubernetes <em>灰度</em><br><em>发布</em> 的能力。而在部署上，则会利用开源项目作为基础平台来进行实践。Rainbond<br>是一个云原生应用管理平台，它使用的设计模式。基于这一设计模式抽象出了标准化的应用模型。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaofengkang/article/details/147037732"> K8S学习之基础七十五： <em>istio</em> <em>实现</em> <em>灰度</em> <em>发布</em>
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaofengkang">云上艺旅的博客</a></p>
+<p>04-07 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>529</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaofengkang/article/details/147037732"> <em>istio</em> <em>灰度</em> <em>发布</em>
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/O4dC8OjO7ZL6/article/details/78589497"> 干货｜采用 <em>Istio</em> <em>实现</em> <em>灰度</em> <em>发布</em> (金丝雀 <em>发布</em> )
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/O4dC8OjO7ZL6">中兴开发者社区</a></p>
+<p>11-20 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1万+</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/O4dC8OjO7ZL6/article/details/78589497"> 点击上方”中兴开发者社区”，关注我们 每天读一篇一线开发者原创好文 <em>灰度</em> <em>发布</em> （又名金丝雀 <em>发布</em> ）介绍<br>当应用上线以后，运维面临的一大挑战是如何能够在不影响已上线业务的情况下进行升级。做过产品的同学都清楚，不管在 <em>发布</em> 前做过多么完备的自动化和人工测试，在<br><em>发布</em> 后都会出现或多或少的故障。根据墨菲定律，可能会出错的版本 <em>发布</em> 一定会出错。 “ANYTHING THAN CAN GO WRONG
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36806379/article/details/103897904"> K8s <em>灰度</em> <em>发布</em> （采用 <em>Istio</em> <em>实现</em> ）
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36806379">qq_36806379的博客</a></p>
+<p>01-08 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1669</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36806379/article/details/103897904"> 这个架构相对比较简单，主要为验证 <em>istio</em> 对流量的分配能力 注释：此架构包含一个nginx-<br>proxy做反向代理，两台nginx做web服务，其中一台nginx访问根返回v1，一台返回v2 目标：<br>A）header中user&#x3D;xforce则只转发至v2 B）返回v1和v2的次数和配置的流量权重吻合 部署步骤 1） 先启动两台nginx-<br>web服务及其svc apiVers…
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LONG_Yi_1994/article/details/147478519"> <em>istio</em> 使用ingress gateway通过header <em>实现</em> 对不同服务的路由
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LONG_Yi_1994">小诸葛的博客</a></p>
+<p>04-24 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1191</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LONG_Yi_1994/article/details/147478519"> 如果使用基于头的路由到服务子集（如v1v2），需要定义metadata:spec:subsets:- name: v1labels:version:<br>v1 # 匹配 Pod 的 version: v1 标签- name: v2labels:version: v2 # 匹配 Pod 的 version:<br>v2<br>标签基于路径前缀（如）将请求路由到命名空间的details和ratings服务。使用去除路径前缀，确保服务接收到的请求路径为&#x2F;xx。可选地，通过headers。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luoluoal/article/details/147628258"> 基于ssm的校园外卖配送系统（源码+文档） 最新发布
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luoluoal">luoluoal的博客</a></p>
+<p>04-30 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>882</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luoluoal/article/details/147628258"><br>校园外卖配送系统的主要使用者分为：1、用户的功能及权限用户登录注册后，进入系统对个人中心，订单信息管理，订单取消管理，配送接单管理，取消配送管理，送达通知管理等功能进行操作管理。2、配送员的功能及权限用户登录注册后，进入系统对个人中心，订单信息管理，配送接单管理，取消配送管理，送达通知管理等功能进行操作管理。3、管理员的功能及权限用户信息的添加和管理，校园外卖配送详细信息添加和管理和文档信息添加和管理以及网站信息管理，这些都是管理员的功能💕💕作者：落落。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chenwiehuang/article/details/147607318"> Maven根据Google proto文件自动生成 <em>java</em> 对象
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chenwiehuang">西木风落</a></p>
+<p>04-29 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1088</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/chenwiehuang/article/details/147607318"> 在分布式系统开发中，Google Protocol<br>Buffers（简称Protobuf）凭借其​​和​​，已成为微服务通信、数据存储等场景的首选协议格式。本文将以Maven为核心工具链，详解如何通过.proto文件自动生成<br><em>Java</em> 对象，并 <em>实现</em> 与Spring Boot项目的深度集成。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://chqiuu.blog.csdn.net/article/details/147573219"> 用 <em>Java</em> 模拟打字：深入解析 <em>java</em>.awt.Robot 的键盘控制艺术
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/QIU176161650">码觉客的博客</a></p>
+<p>04-28 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>2010</p>
+<p><a target="_blank" rel="noopener" href="https://chqiuu.blog.csdn.net/article/details/147573219"> 通过，我们可以 <em>实现</em> 强大的键盘自动化功能。对于简单的字符（英文字母、数字、基础标点等），可以通过模拟单个按键的按下和释放（可能需要配合 Shift<br>等修饰键）来 <em>实现</em><br>，这需要建立字符到键码的映射并注意按键时序和延迟。对于复杂字符、中文或长文本，由于Robot不理解输入法逻辑，最可靠和常用的方法是将文本复制到系统剪贴板，然后模拟按下系统的粘贴快捷键。无论使用哪种方法，理解Robot的工作原理（模拟物理按键），处理好窗口焦点，并加入适当的延迟，是确保模拟输入成功的关键。虽然Robot。
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhian.blog.csdn.net/article/details/147612908"> Linux 服务管理两种方式service和systemctl
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lza20001103">lza20001103的博客</a></p>
+<p>04-29 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload><br>1339</p>
+<p><a target="_blank" rel="noopener" href="https://zhian.blog.csdn.net/article/details/147612908"> Linux 服务管理两种方式service和systemctl
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://wenku.csdn.net/doc/55nwvbxxsp"> </a></p>
+<p><a target="_blank" rel="noopener" href="https://wenku.csdn.net/doc/55nwvbxxsp"> </a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697"><br><img src="https://i-avatar.csdnimg.cn/18a684d63cdf4e6ba4df0fba2b089ead_a2801359697.jpg!1" srcset="/img/loading.gif" lazyload>
+</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697" title="孤独的∛"> 孤独的∛ </a></p>
+<p>博客等级  <img src="https://csdnimg.cn/identity/blog2.png" srcset="/img/loading.gif" lazyload></p>
+<p>码龄2年</p>
+<p>[     6</p>
+<p>原创</p>
+<p>](<a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697">https://blog.csdn.net/a2801359697</a>)</p>
+<pre><code class="hljs">42
+</code></pre>
+<p>点赞</p>
+<pre><code class="hljs">16
+</code></pre>
+<p>收藏</p>
+<pre><code class="hljs">18
+</code></pre>
+<p>粉丝</p>
+<p>关注</p>
+<p><a target="_blank" rel="noopener" href="https://im.csdn.net/chat/a2801359697">私信</a></p>
+<h3 id="热门文章"><a href="#热门文章" class="headerlink" title="热门文章"></a>热门文章</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/147377677"> istio实现灰度发布 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 381 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/146637827"> 运维面试题总结 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 269 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/147354963"> 利用ingress-nginx实现灰度发布 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 254 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/146192501"> docker实现mysql互为主从 且keepalived实现vip漂移 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 221 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/146203938"> docker-compose 实现redis一主多从+哨兵高可用 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 182 </a></li>
+</ul>
+<h3 id="大家在看"><a href="#大家在看" class="headerlink" title="大家在看"></a>大家在看</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/rogeliu/article/details/147643615"> 打卡信奥刷题（1244）用C++实现信奥 P2758 编辑距离 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Hu_sansheng/article/details/147647103"> 三生原理的颠覆性价值（无同类研究完全对可标）？ <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 138 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/yjs20135869/article/details/147614907"> 「详细讲解」C++入门基础 C++知识（有~~ 文中自取） <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 880 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zy2232652/article/details/147577778"> GD32F407单片机开发入门(十六)单片机IAP(在应用编程)详解及实战源码 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 1259 </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_84764726/article/details/147600273"> Java 继承与抽象类入门指南 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/readCountWhite.png" srcset="/img/loading.gif" lazyload> 366 </a></li>
+</ul>
+<h3 id="最新文章"><a href="#最新文章" class="headerlink" title="最新文章"></a>最新文章</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/147354963">利用ingress-nginx实现灰度发布</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/146637827">运维面试题总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/146203938">docker-compose 实现redis一主多从+哨兵高可用</a></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697?type=blog&year=2025&month=04">2025年6篇</a></p>
+<h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><h3 id="最新文章-1"><a href="#最新文章-1" class="headerlink" title="最新文章"></a>最新文章</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/147354963">利用ingress-nginx实现灰度发布</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/146637827">运维面试题总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697/article/details/146203938">docker-compose 实现redis一主多从+哨兵高可用</a></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/a2801359697?type=blog&year=2025&month=04">2025年6篇</a></p>
+<h3 id="目录-2"><a href="#目录-2" class="headerlink" title="目录"></a>目录</h3><p>评论 <img src="https://csdnimg.cn/release/blogv2/dist/pc/img/closeBt.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowLeftWhite.png" srcset="/img/loading.gif" lazyload>被折叠的<br>条评论 <a target="_blank" rel="noopener" href="https://blogdev.blog.csdn.net/article/details/122245662">为什么被折叠?</a> <a target="_blank" rel="noopener" href="https://bbs.csdn.net/forums/FreeZone"><br><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/iconPark.png" srcset="/img/loading.gif" lazyload>到【灌水乐园】发言</a></p>
+<p>查看更多评论<img src="https://csdnimg.cn/release/blogv2/dist/pc/img/commentArrowDownWhite.png" srcset="/img/loading.gif" lazyload></p>
+<p>添加红包</p>
+<p>祝福语</p>
+<p>请填写红包祝福语或标题</p>
+<p>红包数量</p>
+<p>个</p>
+<p>红包个数最小为10个</p>
+<p>红包总金额</p>
+<p>元</p>
+<p>红包金额最低5元</p>
+<p>余额支付</p>
+<p>当前余额3.43元 <a target="_blank" rel="noopener" href="https://i.csdn.net/#/wallet/balance/recharge">前往充值 &gt;</a></p>
+<p>需支付：10.00元</p>
+<p>取消 确定</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward02.png" srcset="/img/loading.gif" lazyload> 下一步</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/guideRedReward03.png" srcset="/img/loading.gif" lazyload> 知道了</p>
+<p>成就一亿技术人!</p>
+<p>领取后你会自动成为博主和红包主的粉丝 规则</p>
+<p><a href=""> <img src="https://profile-avatar.csdnimg.cn/default.jpg!2" srcset="/img/loading.gif" lazyload> </a></p>
+<p>hope_wisdom</p>
+<p>发出的红包</p>
+<p>实付元</p>
+<p><a href="javascript:;">使用余额支付</a></p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-time-out.png" srcset="/img/loading.gif" lazyload> 点击重新获取</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/weixin.png" srcset="/img/loading.gif" lazyload><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/zhifubao.png" srcset="/img/loading.gif" lazyload><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/jingdong.png" srcset="/img/loading.gif" lazyload>扫码支付</p>
+<p>钱包余额 0</p>
+<p><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/pay-help.png" srcset="/img/loading.gif" lazyload></p>
+<p>抵扣说明：</p>
+<p>1.余额是钱包充值的虚拟货币，按照1:1的比例进行支付金额的抵扣。<br>2.余额无法直接购买下载，可以购买VIP、付费专栏及课程。</p>
+<p><a target="_blank" rel="noopener" href="https://i.csdn.net/#/wallet/balance/recharge"><img src="https://csdnimg.cn/release/blogv2/dist/pc/img/recharge.png" srcset="/img/loading.gif" lazyload>余额充值</a></p>
+<p><img src="/" srcset="/img/loading.gif" lazyload></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div></div>
+      <div>http://example.com/2025/05/01/output/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>John Doe</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>May 1, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/01/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" title="">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
