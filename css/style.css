@@ -28,7 +28,7 @@
 /* 背景下雪效果 */
 /* 全屏幕雪花效果 */
 .snow {
-  position: absolute;
+  position: fixed;  /* 改为固定在屏幕上，不随页面滚动 */
   width: 10px;  /* 设置雪花的大小 */
   height: 10px;
   background: linear-gradient(45deg, rgba(255, 255, 255, 0.8), rgba(230, 230, 255, 0.9)); /* 渐变效果 */
