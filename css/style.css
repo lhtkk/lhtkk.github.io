@@ -1,25 +1,33 @@
 .trail {
   position: absolute;
-  width: 15px;  /* 鼠标效果的宽度 */
-  height: 15px; /* 鼠标效果的高度 */
-  border-radius: 50%;  /* 使其变圆形 */
-  pointer-events: none; /* 不拦截点击事件 */
+  width: 10px;  /* 更小的宽度 */
+  height: 10px; /* 更小的高度 */
+  border-radius: 50%;  /* 圆形 */
+  pointer-events: none; /* 不拦截鼠标事件 */
   transform: translate(-50%, -50%);  /* 保证效果在鼠标位置居中 */
-  z-index: 9999;  /* 确保效果不会被其他内容遮挡 */
+  z-index: 9999;  /* 确保效果在其他内容之上 */
 
-  background: linear-gradient(45deg, #ff007f, #6a5acd); /* 渐变色背景，从粉色到紫色 */
-  opacity: 0.8;  /* 初始不完全透明 */
-  animation: trail-animation 0.5s forwards;  /* 设置动画 */
+  background: linear-gradient(45deg, 
+    #ff0000,   /* 红色 */
+    #ff7f00,   /* 橙色 */
+    #ffff00,   /* 黄色 */
+    #00ff00,   /* 绿色 */
+    #0000ff,   /* 蓝色 */
+    #4b0082,   /* 靛蓝 */
+    #8b00ff    /* 紫色 */
+  ); /* 彩虹渐变背景 */
+  opacity: 0.8;  /* 初始透明度 */
+  animation: trail-animation 0.5s forwards;  /* 添加动画 */
 }
 
-/* 动画效果：从小到大并逐渐消失 */
+/* 设置动画效果：渐变的球从小到大并消失 */
 @keyframes trail-animation {
   0% {
-    transform: scale(1);  /* 初始状态大小 */
-    opacity: 1;  /* 初始完全不透明 */
+    transform: scale(1);  /* 初始大小 */
+    opacity: 1;  /* 完全不透明 */
   }
   100% {
-    transform: scale(2);  /* 动画结束时放大 */
+    transform: scale(1.5);  /* 增大效果 */
     opacity: 0;  /* 渐变消失 */
   }
 }
