@@ -29,7 +29,7 @@
   
   
   
-  <title><span class="gradient-text">lhtの博客</span></title>
+  <title><span class="gradient-title">lhtの博客</span></title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -152,12 +152,39 @@
       outline: none;
     }
   </style>
+  <script>
+  window.addEventListener('DOMContentLoaded', function() {
+    var titleElement = document.querySelector('.gradient-title'); // 找到标题元素
+    if (titleElement) {
+      // 每2秒更改一次标题背景颜色
+      function changeTitleColor() {
+        titleElement.style.background = `linear-gradient(to right, ${getRandomColor()}, ${getRandomColor()})`;
+        titleElement.style.backgroundSize = "200% 200%";
+        titleElement.style.animation = "gradientChange 5s ease infinite"; // 每5秒刷新一次背景渐变
+      }
+
+      // 获取一个随机颜色的函数
+      function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+
+      // 每2秒触发一次 changeTitleColor 函数
+      setInterval(changeTitleColor, 2000);
+    }
+  });
+</script>
+
 </body>
   <script src="/js/mouse-effect.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <!-- 引入 Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
+  <link rel="stylesheet" href="/css/custom.css">
 <meta name="generator" content="Hexo 7.3.0"></head>
 
 

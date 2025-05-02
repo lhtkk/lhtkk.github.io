@@ -51,24 +51,26 @@
 }
 
 /* 对首页标题和副标题应用渐变色 */
-.gradient-text {
-    font-weight: bold;
-    font-size: 2em;
-    background: linear-gradient(to right, #ff7e5f, #feb47b); /* 初始渐变颜色 */
-    -webkit-background-clip: text;
-    color: transparent;
-    animation: gradientChange 10s ease infinite;
+/* 为标题应用渐变色并使文字颜色动态变化 */
+.gradient-title {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 2em;
+  background: linear-gradient(to right, #ff7e5f, #feb47b); /* 初始渐变颜色 */
+  -webkit-background-clip: text; /* 使背景色仅作用于文字 */
+  color: transparent; /* 让文字本身透明，背景色能显示 */
+  animation: gradientChange 10s ease infinite; /* 动画：10秒一个周期 */
 }
 
 @keyframes gradientChange {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
