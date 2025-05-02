@@ -23,7 +23,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="redis高可用">
 <meta property="og:url" content="https://www.tiantian123.asia/2025/05/01/docker-compose_%E5%AE%9E%E7%8E%B0redis%E4%B8%80%E4%B8%BB%E5%A4%9A%E4%BB%8E+%E5%93%A8%E5%85%B5%E9%AB%98%E5%8F%AF%E7%94%A8_docker_compose%E9%83%A8%E7%BD%B2redis%E4%B8%80%E4%B8%BB%E5%A4%9A%E4%BB%8E-CSDN%E5%8D%9A%E5%AE%A2/index.html">
-<meta property="og:site_name" content="痴情男人的博客">
+<meta property="og:site_name" content="lhtの博客">
 <meta property="og:description" content="主从的原理就是 从节点向主节点发送一个syn请求 主节点收到请求 在后台创建一个rdb快照文件发送给从节点 ，再在暂存空间记录创建到发送完成这段时间的所有写命令，等rdb发送完成再发送写命令 从节点加载rdb和写命令完成主从同步  哨兵就是通过ping 如果通不了了 就会告知其他的哨兵 都发现ping不了了则标记下线 选举出新的主节点 !! 直接开整 首先最简单的 直接配置不用docker的操作m">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-01T11:37:17.416Z">
@@ -33,7 +33,7 @@
   
   
   
-  <title>redis高可用 - 痴情男人的博客</title>
+  <title>redis高可用 - lhtの博客</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -91,7 +91,7 @@
       <i class="fas fa-play"></i> 播放
     </button>
     <audio id="background-music" loop>
-      <source src="/music/music.mp3" type="audio/mp3">
+      <source src="https://cdn.jsdelivr.net/gh/lhtkk/lhtkk.github.io/music/music.mp3" type="audio/mp3">
       您的浏览器不支持音频播放。
     </audio>
   </div>
@@ -277,7 +277,7 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+     style="background: url('/img/139.jpeg') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
@@ -449,12 +449,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2025/05/02/K8S%E7%AC%94%E8%AE%B0/" title="K8S笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">K8S笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/01/K8S%E7%AC%94%E8%AE%B0/" title="K8S笔记">
-                        <span class="hidden-mobile">K8S笔记</span>
+                      <a href="/2025/05/01/kafka_4.0.0_(%E7%94%A8kraft%E6%A8%A1%E5%BC%8F)/" title="kafka 4.0.0">
+                        <span class="hidden-mobile">kafka 4.0.0</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
