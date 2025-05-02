@@ -53,13 +53,13 @@
 /* 对首页标题和副标题应用渐变色 */
 .animated-title {
   font-weight: bold;
-  font-size: 2em;
+  font-size: 1.4em; /* 缩小标题字体 */
   background: linear-gradient(270deg, #ff4b1f, #ff9068, #28a745, #1fddff, #ffc107, #ff4b1f);
-  background-size: 800% 800%;
+  background-size: 600% 600%; /* 缩小背景动画范围 */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gradientText 6s linear infinite, glowPulse 2.5s ease-in-out infinite;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  animation: gradientText 8s linear infinite, glowPulse 3s ease-in-out infinite;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.2);
 }
 
 @keyframes gradientText {
@@ -70,14 +70,14 @@
 
 @keyframes glowPulse {
   0%, 100% {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2),
-                 0 0 12px rgba(255, 255, 255, 0.3),
-                 0 0 16px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.2),
+                 0 0 6px rgba(255, 255, 255, 0.25),
+                 0 0 8px rgba(255, 255, 255, 0.3);
   }
   50% {
-    text-shadow: 0 0 14px rgba(255, 255, 255, 0.5),
-                 0 0 20px rgba(255, 255, 255, 0.6),
-                 0 0 28px rgba(255, 255, 255, 0.7);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.35),
+                 0 0 12px rgba(255, 255, 255, 0.4),
+                 0 0 16px rgba(255, 255, 255, 0.45);
   }
 }
 
