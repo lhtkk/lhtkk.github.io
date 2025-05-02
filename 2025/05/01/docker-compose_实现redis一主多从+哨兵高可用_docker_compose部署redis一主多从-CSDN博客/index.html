@@ -85,21 +85,30 @@
 
   
   <body>
-   <!-- music-player.ejs -->
 
-<!-- 音乐播放器 HTML -->
-<div class="music-player">
-  <button id="play-button" class="play-btn">
-    <i class="fas fa-play"></i> 播放
-  </button>
-  <audio id="background-music" loop>
-    <source src="https://cdn.jsdelivr.net/gh/lhtkk/lhtkk.github.io/music/music.mp3" type="audio/mp3">
-    您的浏览器不支持音频播放。
-  </audio>
-</div>
 
-<!-- 音乐播放器 JS -->
+</body>
+<!-- 放在页面底部（或者直接放在body的外部），确保播放器不受页面跳转影响 -->
+<div id="music-player-container"></div>
+
+<!-- 播放器 HTML -->
 <script>
+  // 这里我们将播放器和控制按钮放在一个独立的 div 中
+  if (!document.getElementById('background-music')) {
+    const musicPlayerDiv = document.createElement('div');
+    musicPlayerDiv.className = 'music-player';
+    musicPlayerDiv.innerHTML = `
+      <button id="play-button" class="play-btn">
+        <i class="fas fa-play"></i> 播放
+      </button>
+      <audio id="background-music" loop>
+        <source src="https://cdn.jsdelivr.net/gh/lhtkk/lhtkk.github.io/music/music.mp3" type="audio/mp3">
+        您的浏览器不支持音频播放。
+      </audio>
+    `;
+    document.getElementById('music-player-container').appendChild(musicPlayerDiv);
+  }
+
   const playButton = document.getElementById('play-button');
   const audio = document.getElementById('background-music');
 
@@ -195,8 +204,6 @@
   }
 </style>
 
-
-</body>
   <script src="/js/mouse-effect.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <!-- 引入 Font Awesome -->
