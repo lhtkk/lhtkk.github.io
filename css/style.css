@@ -52,7 +52,7 @@
 
 /* 对首页标题和副标题应用渐变色 */
 
-.fancy-gradient-title {
+.strong {
   font-weight: bold;
   font-size: 1.2em;
   background: linear-gradient(270deg, #ff4b1f, #ff9068, #28a745, #1fddff, #ffc107, #ff4b1f);
