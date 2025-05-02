@@ -51,10 +51,30 @@
 }
 
 /* 对首页标题和副标题应用渐变色 */
-/* 让标题应用渐变色 */
-#site-title {
-    background: linear-gradient(to right, #ff7e5f, #feb47b); /* 自定义渐变颜色 */
+@keyframes gradientChange {
+    0% {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* 初始渐变颜色 */
+    }
+    25% {
+        background: linear-gradient(to right, #6a11cb, #2575fc); /* 另一种渐变颜色 */
+    }
+    50% {
+        background: linear-gradient(to right, #ff6a00, #ee0979); /* 另一种渐变颜色 */
+    }
+    75% {
+        background: linear-gradient(to right, #00c6ff, #0072ff); /* 另一种渐变颜色 */
+    }
+    100% {
+        background: linear-gradient(to right, #ff7e5f, #feb47b); /* 回到初始渐变颜色 */
+    }
+}
+
+strong {
+    font-weight: bold;
+    font-size: 2em;
+    background: linear-gradient(to right, #ff7e5f, #feb47b); /* 初始渐变颜色 */
     -webkit-background-clip: text;
     color: transparent;
+    animation: gradientChange 10s ease infinite; /* 10s 为一个周期，调整时间根据需要 */
 }
 
