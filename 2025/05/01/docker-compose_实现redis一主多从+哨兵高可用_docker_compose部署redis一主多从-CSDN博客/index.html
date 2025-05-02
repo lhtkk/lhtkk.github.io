@@ -85,7 +85,7 @@
 
   
   <body>
-  <!-- music-player.ejs -->
+<!-- music-player.ejs -->
 
 <!-- 音乐播放器 HTML -->
 <div class="music-player">
@@ -135,35 +135,36 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
   }
 
   .play-btn {
     background: none;
     color: white;
     border: none;
-    font-size: 30px;
+    font-size: 22px;  /* 减小图标尺寸 */
     cursor: pointer;
     font-family: "Arial", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 60px;
-    height: 60px;
+    width: 50px;  /* 缩小按钮 */
+    height: 50px; /* 缩小按钮 */
     border-radius: 50%;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
 
   .play-btn i {
-    margin-right: 5px;
+    font-size: 18px;  /* 减小图标尺寸 */
   }
 
   .play-btn:hover {
     background-color: #ff6b6b;
-    transform: scale(1.1);
+    transform: scale(1.1);  /* 按钮轻微增大 */
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.7);  /* 加强悬浮效果 */
   }
 
   .play-btn:focus {
