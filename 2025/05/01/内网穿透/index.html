@@ -103,9 +103,13 @@
   const playButton = document.getElementById('play-button');
   const audio = document.getElementById('background-music');
 
-  // 页面加载时，检查音频是否继续播放
+  // 页面加载时，检查是否有播放记录以及播放进度
   window.addEventListener('load', () => {
-    if (localStorage.getItem('musicPlaying') === 'true') {
+    const isPlaying = localStorage.getItem('musicPlaying') === 'true';
+    const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+    
+    audio.currentTime = savedTime;  // 恢复播放进度
+    if (isPlaying) {
       audio.play().then(() => {
         playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停';
       }).catch(err => console.error('音频自动播放失败：', err));
@@ -117,7 +121,68 @@
     if (audio.paused) {
       audio.play().then(() => {
         playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停';
-        local
+        localStorage.setItem('musicPlaying', 'true');
+      });
+    } else {
+      audio.pause();
+      playButton.innerHTML = '<i class="fas fa-play"></i> 播放';
+      localStorage.setItem('musicPlaying', 'false');
+    }
+  });
+
+  // 监听播放进度变化并保存到 localStorage
+  audio.addEventListener('timeupdate', () => {
+    localStorage.setItem('musicTime', audio.currentTime);
+  });
+</script>
+
+<!-- 音乐播放器样式 -->
+<style>
+  .music-player {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    padding: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  }
+
+  .play-btn {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 22px;  /* 图标尺寸 */
+    cursor: pointer;
+    font-family: "Arial", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;  /* 按钮尺寸 */
+    height: 50px; /* 按钮尺寸 */
+    border-radius: 50%;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+
+  .play-btn i {
+    font-size: 18px;  /* 图标尺寸 */
+    margin-top: 6px;  /* 将图标稍微向下移动 */
+  }
+
+  .play-btn:hover {
+    background-color: #ff6b6b;
+    transform: scale(1.1);  /* 增加按钮悬浮效果 */
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.7);  /* 按钮悬浮时的阴影效果 */
+  }
+
+  .play-btn:focus {
+    outline: none;
+  }
+</style>
 
 
 </body>
