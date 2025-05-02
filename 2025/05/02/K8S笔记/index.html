@@ -87,7 +87,7 @@
 
   
   <body>
-<!-- music-player.ejs -->
+   <!-- music-player.ejs -->
 
 <!-- 音乐播放器 HTML -->
 <div class="music-player">
@@ -105,12 +105,15 @@
   const playButton = document.getElementById('play-button');
   const audio = document.getElementById('background-music');
 
-  // 页面加载时，检查是否有播放记录以及播放进度
+  // 页面加载时，恢复音频的状态
   window.addEventListener('load', () => {
     const isPlaying = localStorage.getItem('musicPlaying') === 'true';
     const savedTime = parseFloat(localStorage.getItem('musicTime')) || 0;
+
+    // 恢复播放进度
+    audio.currentTime = savedTime;
     
-    audio.currentTime = savedTime;  // 恢复播放进度
+    // 恢复播放状态
     if (isPlaying) {
       audio.play().then(() => {
         playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停';
@@ -123,18 +126,26 @@
     if (audio.paused) {
       audio.play().then(() => {
         playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停';
-        localStorage.setItem('musicPlaying', 'true');
+        localStorage.setItem('musicPlaying', 'true');  // 播放状态保存在 localStorage
       });
     } else {
       audio.pause();
       playButton.innerHTML = '<i class="fas fa-play"></i> 播放';
-      localStorage.setItem('musicPlaying', 'false');
+      localStorage.setItem('musicPlaying', 'false');  // 暂停状态保存在 localStorage
     }
   });
 
-  // 监听播放进度变化并保存到 localStorage
+  // 监听音频播放进度，并保存到 localStorage
   audio.addEventListener('timeupdate', () => {
     localStorage.setItem('musicTime', audio.currentTime);
+  });
+
+  // 页面卸载时清理播放状态
+  window.addEventListener('beforeunload', () => {
+    // 仅在音频暂停时保存状态
+    if (audio.paused) {
+      localStorage.setItem('musicPlaying', 'false');
+    }
   });
 </script>
 
