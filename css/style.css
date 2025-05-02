@@ -50,3 +50,19 @@
   }
 }
 
+/* 对首页标题和副标题应用渐变色 */
+#site-title,
+#site-subtitle {
+    background: linear-gradient(to right, #ff7e5f, #feb47b); /* 这里可以自定义渐变色 */
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+#site-title {
+    font-size: 3em; /* 你可以调整字体大小 */
+}
+
+#site-subtitle {
+    font-size: 1.5em; /* 你可以调整字体大小 */
+}
+
