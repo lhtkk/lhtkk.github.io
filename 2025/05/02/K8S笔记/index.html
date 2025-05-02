@@ -87,83 +87,92 @@
 
   
   <body>
-  <!-- 音乐播放器 -->
-  <div class="music-player">
-    <button id="play-button" class="play-btn">
-      <i class="fas fa-play"></i> 播放
-    </button>
-    <audio id="background-music" loop>
-      <source src="https://cdn.jsdelivr.net/gh/lhtkk/lhtkk.github.io/music/music.mp3" type="audio/mp3">
-      您的浏览器不支持音频播放。
-    </audio>
-  </div>
+  <!-- music-player.ejs -->
 
-  <script>
-    // 获取按钮和音频元素
-    const playButton = document.getElementById('play-button');
-    const audio = document.getElementById('background-music');
+<!-- 音乐播放器 HTML -->
+<div class="music-player">
+  <button id="play-button" class="play-btn">
+    <i class="fas fa-play"></i> 播放
+  </button>
+  <audio id="background-music" loop>
+    <source src="https://cdn.jsdelivr.net/gh/lhtkk/lhtkk.github.io/music/music.mp3" type="audio/mp3">
+    您的浏览器不支持音频播放。
+  </audio>
+</div>
 
-    // 播放按钮点击事件
-    playButton.addEventListener('click', function() {
-      if (audio.paused) {
-        audio.play().then(() => {
-          playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停'; // 修改为暂停图标
-        }).catch(err => {
-          console.error('音频播放失败：', err); // 输出错误
-        });
-      } else {
-        audio.pause();
-        playButton.innerHTML = '<i class="fas fa-play"></i> 播放'; // 修改为播放图标
-      }
-    });
-  </script>
+<!-- 音乐播放器 JS -->
+<script>
+  const playButton = document.getElementById('play-button');
+  const audio = document.getElementById('background-music');
 
-  <style>
-    /* 音乐播放器容器 */
-    .music-player {
-      position: fixed;
-      top: 20px;  /* 距离顶部 20px */
-      right: 20px; /* 距离右边 20px */
-      z-index: 9999;  /* 确保播放器在页面最上层 */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: rgba(0, 0, 0, 0.7); /* 背景半透明 */
-      border-radius: 50%; /* 圆形 */
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* 增加阴影效果 */
+  // 页面加载时，如果之前有播放记录，恢复播放状态
+  if (localStorage.getItem('musicPlaying') === 'true') {
+    audio.play().then(() => {
+      playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停';
+    }).catch(err => console.error('音频自动播放失败：', err));
+  }
+
+  // 点击按钮控制播放和暂停
+  playButton.addEventListener('click', function () {
+    if (audio.paused) {
+      audio.play().then(() => {
+        playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停';
+        localStorage.setItem('musicPlaying', 'true');
+      });
+    } else {
+      audio.pause();
+      playButton.innerHTML = '<i class="fas fa-play"></i> 播放';
+      localStorage.setItem('musicPlaying', 'false');
     }
+  });
+</script>
 
-    /* 播放按钮 */
-    .play-btn {
-      background: none;
-      color: white;
-      border: none;
-      font-size: 30px; /* 增大图标 */
-      cursor: pointer;
-      font-family: "Arial", sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%; /* 按钮圆形 */
-      transition: background-color 0.3s, transform 0.2s; /* 平滑过渡 */
-    }
+<!-- 音乐播放器样式 -->
+<style>
+  .music-player {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 50%;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
 
-    .play-btn i {
-      margin-right: 5px;
-    }
+  .play-btn {
+    background: none;
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    font-family: "Arial", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    transition: background-color 0.3s, transform 0.2s;
+  }
 
-    .play-btn:hover {
-      background-color: #ff6b6b; /* 按钮悬浮时背景颜色 */
-      transform: scale(1.1); /* 增大按钮 */
-    }
+  .play-btn i {
+    margin-right: 5px;
+  }
 
-    .play-btn:focus {
-      outline: none;
-    }
-  </style>
+  .play-btn:hover {
+    background-color: #ff6b6b;
+    transform: scale(1.1);
+  }
+
+  .play-btn:focus {
+    outline: none;
+  }
+</style>
+
 
 </body>
   <script src="/js/mouse-effect.js"></script>
