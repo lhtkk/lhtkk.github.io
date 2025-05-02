@@ -51,3 +51,19 @@
 }
 
 /* 对首页标题和副标题应用渐变色 */
+.animated-title {
+  font-weight: bold;
+  font-size: 1.4em;
+  background: linear-gradient(270deg, #ff4b1f, #ff9068, #28a745, #1fddff, #ffc107, #ff4b1f);
+  background-size: 1200% 1200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientText 6s ease infinite;
+}
+
+@keyframes gradientText {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
