@@ -50,5 +50,5 @@ function createSnow() {
 }
 
 // 每100毫秒生成一个雪花
-setInterval(createSnow, 1000);
+setInterval(createSnow, 700);
 
