@@ -52,9 +52,9 @@
 
 /* 对首页标题和副标题应用渐变色 */
 
-.strong {
+.brand a {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.5em;
   background: linear-gradient(270deg, #ff4b1f, #ff9068, #28a745, #1fddff, #ffc107, #ff4b1f);
   background-size: 1200% 1200%;
   -webkit-background-clip: text;
