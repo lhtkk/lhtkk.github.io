@@ -1,26 +1,3 @@
-// 鼠标烟花效果
-document.addEventListener('mousemove', function(e) {
-  for (let i = 0; i < 5; i++) {
-    const trail = document.createElement('div');
-    trail.className = 'trail';
-    
-    // 随机颜色
-    const randomColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
-    trail.style.backgroundColor = randomColor;
-
-    // 设置位置
-    trail.style.left = e.pageX + 'px';
-    trail.style.top = e.pageY + 'px';
-
-    // 追加到页面中
-    document.body.appendChild(trail);
-
-    // 设置延迟删除
-    setTimeout(() => {
-      trail.remove();
-    }, 500);  // 500毫秒后删除
-  }
-});
 
 // 背景下雪效果
 // 背景下雪效果
