@@ -26,15 +26,15 @@
 <meta property="og:site_name" content="lhtのblog">
 <meta property="og:description" content="搭建自己的博客 我这里用的是云服务器 centos的 1.安装git和nodejs1234567891011121314151617使用非root用户!!!!git下载地址https:&#x2F;&#x2F;git-scm.com&#x2F;downloads#yum install -y gitnodejs下载地址https:&#x2F;&#x2F;nodejs.org&#x2F;en&#x2F;download&#x2F;#curl -o- https:&#x2F;&#x2F;raw.git">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="d:\%E4%BA%91%E5%8E%9F%E7%94%9F%E8%87%AA%E5%AD%A6\%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA\imgs\image-20250503225045789.png">
-<meta property="og:image" content="d:\%E4%BA%91%E5%8E%9F%E7%94%9F%E8%87%AA%E5%AD%A6\%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA\imgs\image-20250504082407372.png">
-<meta property="og:image" content="d:\%E4%BA%91%E5%8E%9F%E7%94%9F%E8%87%AA%E5%AD%A6\%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA\imgs\image-20250504082735986.png">
-<meta property="article:published_time" content="2025-05-26T15:26:26.845Z">
-<meta property="article:modified_time" content="2025-05-26T15:26:26.842Z">
+<meta property="og:image" content="https://www.tiantian123.asia/images/image-20250503225045789.png">
+<meta property="og:image" content="https://www.tiantian123.asia/images/image-20250504082407372.png">
+<meta property="og:image" content="https://www.tiantian123.asia/images/image-20250504082735986.png">
+<meta property="article:published_time" content="2025-05-26T15:45:46.952Z">
+<meta property="article:modified_time" content="2025-05-26T15:45:46.950Z">
 <meta property="article:author" content="lht">
 <meta property="article:tag" content="blog">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="d:\%E4%BA%91%E5%8E%9F%E7%94%9F%E8%87%AA%E5%AD%A6\%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA\imgs\image-20250503225045789.png">
+<meta name="twitter:image" content="https://www.tiantian123.asia/images/image-20250503225045789.png">
   
   
   
@@ -215,7 +215,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-26 23:26" pubdate>
+        <time datetime="2025-05-26 23:45" pubdate>
           2025年5月26日 晚上
         </time>
       </span>
@@ -289,7 +289,7 @@
 
 <p>若是上面的命令都没报错的话，就恭喜了，运行 hexo s 命令，其中 s 是 server 的缩写，在浏览</p>
 <p>器中输入 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000</a> 回车就能够预览效果了。</p>
-<p><img src="D:\云原生自学\博客搭建\imgs\image-20250503225045789.png" srcset="/img/loading.gif" lazyload alt="image-20250503225045789"></p>
+<p><img src="/images/image-20250503225045789.png" srcset="/img/loading.gif" lazyload alt="image-20250503225045789"></p>
 <h2 id="3-加载主题"><a href="#3-加载主题" class="headerlink" title="3.加载主题"></a>3.加载主题</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash">大家可以从官网下载自己喜欢的主题：https://hexo.io/themes/<br><br>我这里的主题是：https://github.com/fluid-dev/hexo-theme-fluid?tab=readme-ov-file<br><br>随后将下载的主题文件夹放在 myblog/theme 中，在 _config.yml 文件中修改theme 为hexo-theme-fluid-master(注意和主题文件名一致)<br><span class="hljs-comment">#cat _config.yml |grep theme</span><br>theme: hexo-theme-fluid-1.9.8 <br><span class="hljs-comment">#ls themes/</span><br>hexo-theme-fluid-1.9.8<br>修改好之后执行 hexo g 命令，然后再 hexo s ，在浏览器中输入 http://localhost:4000/回车就能够预览修改主题后的效果了。<br></code></pre></td></tr></table></figure>
 
 <h2 id="4-将博客部署在GitHub上"><a href="#4-将博客部署在GitHub上" class="headerlink" title="4.将博客部署在GitHub上"></a>4.将博客部署在GitHub上</h2><p>点击 右上角new repository 建立一个新的仓库，注意Github 仅能使用一个同名仓库的代码托管一个静态站点，这里注意仓库名一定要是： <strong>用户名.github.io</strong>  </p>
@@ -299,9 +299,9 @@
 <p>按照提示完成三次回车，便可生成 ssh key，采用以下指令也可以查看自己的ssh：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#cat ~/.ssh/id_rsa.pub     #将公钥放到github上</span><br></code></pre></td></tr></table></figure>
 
-<p><img src="D:\云原生自学\博客搭建\imgs\image-20250504082407372.png" srcset="/img/loading.gif" lazyload alt="image-20250504082407372"></p>
+<p><img src="/images/image-20250504082407372.png" srcset="/img/loading.gif" lazyload alt="image-20250504082407372"></p>
 <p>此时，本地和Github的工做作得差不了，是时候把它们两个链接起来了。你也能够查看官网的部署教程。先不着急，部署以前还须要修改配置和安装部署插件。第一：打开项目根目录下的_config.yml 配置文件配置参数。拉到文件末尾，填上以下配置。</p>
-<p><img src="D:\云原生自学\博客搭建\imgs\image-20250504082735986.png" srcset="/img/loading.gif" lazyload alt="image-20250504082735986"></p>
+<p><img src="/images/image-20250504082735986.png" srcset="/img/loading.gif" lazyload alt="image-20250504082735986"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#tail -n 10 myBlog/_config.yml </span><br><br>theme: hexo-theme-fluid-1.9.8 <br><br><span class="hljs-comment"># Deployment</span><br><span class="hljs-comment">## Docs: https://hexo.io/docs/one-command-deployment</span><br>url: https://www.tiantian123.asia<br>root: /<br>deploy:<br>  <span class="hljs-built_in">type</span>: <span class="hljs-string">&#x27;git&#x27;</span><br>  repo: git@github.com:lhtkk/lhtkk.github.io.git<br>  branch: master<br><br></code></pre></td></tr></table></figure>
 
 <p>第二要安装一个部署插件 hexo-deployer-git，输如以下指令：</p>
@@ -411,9 +411,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/26/kafka_4.0.0_(%E7%94%A8kraft%E6%A8%A1%E5%BC%8F)/" title="kafka安装和配置">
+                      <a href="/2025/05/26/%E4%BD%BF%E7%94%A8helm%E5%AE%89%E8%A3%85loki/" title="loki安装和配置">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">kafka安装和配置</span>
+                        <span class="hidden-mobile">loki安装和配置</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -421,8 +421,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/26/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" title="内网穿透">
-                        <span class="hidden-mobile">内网穿透</span>
+                      <a href="/2025/05/26/istio/" title="istio">
+                        <span class="hidden-mobile">istio</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

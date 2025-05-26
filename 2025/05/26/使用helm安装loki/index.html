@@ -26,13 +26,13 @@
 <meta property="og:site_name" content="lhtのblog">
 <meta property="og:description" content="使用helm安装loki1.加入repo12# helm repo add grafana https:&#x2F;&#x2F;grafana.github.io&#x2F;helm-charts#helm repo update  2.安装loki12345678910111213141516171819202122232425262728293031323334353637#helm  search  repo lokiN">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="d:\%E4%BA%91%E5%8E%9F%E7%94%9F%E8%87%AA%E5%AD%A6\loki\images\image-20250504192455532.png">
-<meta property="article:published_time" content="2025-05-26T15:29:43.069Z">
-<meta property="article:modified_time" content="2025-05-26T15:29:43.066Z">
+<meta property="og:image" content="https://www.tiantian123.asia/images/image-20250504192455532.png">
+<meta property="article:published_time" content="2025-05-26T15:45:50.486Z">
+<meta property="article:modified_time" content="2025-05-26T15:45:50.485Z">
 <meta property="article:author" content="lht">
 <meta property="article:tag" content="云原生">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="d:\%E4%BA%91%E5%8E%9F%E7%94%9F%E8%87%AA%E5%AD%A6\loki\images\image-20250504192455532.png">
+<meta name="twitter:image" content="https://www.tiantian123.asia/images/image-20250504192455532.png">
   
   
   
@@ -213,7 +213,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-26 23:29" pubdate>
+        <time datetime="2025-05-26 23:45" pubdate>
           2025年5月26日 晚上
         </time>
       </span>
@@ -285,7 +285,7 @@
 <h2 id="3-暴露loki-granafa端口"><a href="#3-暴露loki-granafa端口" class="headerlink" title="3.暴露loki granafa端口"></a>3.暴露loki granafa端口</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#kubectl -n loki get all</span><br>NAME                                READY   STATUS    RESTARTS   AGE<br>pod/loki-0                          1/1     Running   0          3m40s<br>pod/loki-grafana-5f59555598-nh98m   2/2     Running   0          3m40s<br>pod/loki-promtail-47pcs             1/1     Running   0          3m40s<br>pod/loki-promtail-dwcz4             1/1     Running   0          3m41s<br>pod/loki-promtail-gwxlc             1/1     Running   0          3m40s<br><br>NAME                      TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE<br>service/loki              ClusterIP   10.98.5.98     &lt;none&gt;        3100/TCP       3m41s<br>service/loki-grafana      NodePort    10.102.44.99   &lt;none&gt;        80:31625/TCP   3m41s<br>service/loki-headless     ClusterIP   None           &lt;none&gt;        3100/TCP       3m41s<br>service/loki-memberlist   ClusterIP   None           &lt;none&gt;        7946/TCP       3m41s<br><br>NAME                           DESIRED   CURRENT   READY   UP-TO-DATE   AVAILABLE   NODE SELECTOR   AGE<br>daemonset.apps/loki-promtail   3         3         3       3            3           &lt;none&gt;          3m41s<br><br>NAME                           READY   UP-TO-DATE   AVAILABLE   AGE<br>deployment.apps/loki-grafana   1/1     1            1           3m41s<br><br>NAME                                      DESIRED   CURRENT   READY   AGE<br>replicaset.apps/loki-grafana-5f59555598   1         1         1       3m40s<br><br>NAME                    READY   AGE<br>statefulset.apps/loki   1/1     3m41s<br><br></code></pre></td></tr></table></figure>
 
 <p>点击左上角 选中Explor   点击箭头指向的 即可看到日志</p>
-<p><img src="D:\云原生自学\loki\images\image-20250504192455532.png" srcset="/img/loading.gif" lazyload alt="image-20250504192455532"></p>
+<p><img src="/images/image-20250504192455532.png" srcset="/img/loading.gif" lazyload alt="image-20250504192455532"></p>
 <p>可以在istio-system svc ingress控制器中加入 kubectl patch svc istio-ingressgateway -n istio-system <br>  -p ‘{“spec”:{“externalTrafficPolicy”:”Local”}}’  暴露真实ip</p>
 
                 
@@ -377,18 +377,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/05/26/istio/" title="istio">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">istio</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/05/26/%E7%9B%91%E6%8E%A7/" title="prometheus监控">
-                        <span class="hidden-mobile">prometheus监控</span>
+                      <a href="/2025/05/26/%E4%B8%93%E5%B1%9E%E5%8D%9A%E5%AE%A2/" title="搭建博客">
+                        <span class="hidden-mobile">搭建博客</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
