@@ -1,0 +1,705 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="lht">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="整理流程12345678910111213141516171819202122232425262728293031323334353637383940使用 Prometheus 结合 Kubernetes Operator 来监控服务的整体流程，没有包含 YAML 配置文件，只讲解步骤：1. 安装 Prometheus Operator首先，确保在 Kubernetes 集群中安装了 Promet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="prometheus监控">
+<meta property="og:url" content="https://www.tiantian123.asia/2025/05/26/%E7%9B%91%E6%8E%A7/index.html">
+<meta property="og:site_name" content="lhtのblog">
+<meta property="og:description" content="整理流程12345678910111213141516171819202122232425262728293031323334353637383940使用 Prometheus 结合 Kubernetes Operator 来监控服务的整体流程，没有包含 YAML 配置文件，只讲解步骤：1. 安装 Prometheus Operator首先，确保在 Kubernetes 集群中安装了 Promet">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-26T15:28:58.171Z">
+<meta property="article:modified_time" content="2025-05-26T15:28:58.169Z">
+<meta property="article:author" content="lht">
+<meta property="article:tag" content="云原生">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>prometheus监控 - lhtのblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.tiantian123.asia","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">lhtのblog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="prometheus监控"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-26 23:28" pubdate>
+          2025年5月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">prometheus监控</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="整理流程"><a href="#整理流程" class="headerlink" title="整理流程"></a>整理流程</h2><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs html">使用 Prometheus 结合 Kubernetes Operator 来监控服务的整体流程，没有包含 YAML 配置文件，只讲解步骤：<br><br>1. 安装 Prometheus Operator<br>首先，确保在 Kubernetes 集群中安装了 Prometheus Operator，这个 Operator 负责管理 Prometheus 的部署、配置、服务发现和监控。你可以通过 Helm 或直接应用 YAML 文件来安装 Prometheus Operator。<br><br>2. 创建 Service（服务暴露）<br>你需要在 Kubernetes 中为你的应用创建一个 Service，它会暴露应用的端口，以便 Prometheus 可以访问这些指标数据。<br><br>Service 是用来暴露应用的端口和接口，让外部或其他服务能够访问该服务。<br><br>在创建时，需要指定端口、选择器（确定哪个 Pod 或容器将被暴露）等信息。<br><br>3. 创建 Endpoints（可选）<br>一般情况下，Kubernetes 会自动为你的 Service 创建 Endpoints，用于暴露应用的网络地址和端口。如果你的应用暴露的是静态地址或需要手动配置，那么可以创建一个 Endpoints 资源。<br><br>4. 创建 ServiceMonitor（Prometheus 监控）<br>ServiceMonitor 是 Prometheus Operator 提供的一个资源对象，用来告知 Prometheus 哪些服务需要监控。ServiceMonitor 会关联到指定的 Kubernetes Service，并定义如何抓取该服务的指标数据。<br><br>在 ServiceMonitor 中，需要指定你要监控的 Service 的标签（例如，选择 app: my-app 的 Service），并配置抓取的端口和间隔等。<br><br>Prometheus 会根据 ServiceMonitor 自动发现并抓取服务的指标数据。<br><br>5. 验证 Prometheus 配置<br>一旦配置了 ServiceMonitor，Prometheus 会开始监控你定义的服务。可以通过访问 Prometheus 的 Web 界面来检查抓取的目标和监控的服务。<br><br>访问 Prometheus UI，查看 “Targets” 页面，确认目标服务是否正确显示并处于正常状态。<br><br>在 Prometheus UI 中，通过查询相关指标来确保服务的数据正在被抓取。<br><br>6. 设置告警（可选）<br>如果你想要设置告警规则，Prometheus 可以监控服务的健康状况并在出现问题时发送告警。例如，如果应用的响应时间过长，Prometheus 可以触发告警。<br><br>配置 PrometheusRule 资源来定义告警规则，如 HTTP 请求响应时间过长、错误率过高等。<br><br>配合 Alertmanager，Prometheus 可以将告警发送到不同的通知渠道（例如 Slack、邮件等）。<br><br>7. 维护与优化<br>扩展与调整：随着应用规模的增长，可以根据需求扩展 Prometheus 的配置，增加更多的 ServiceMonitor 或调整抓取间隔。<br><br>故障处理：根据告警和监控数据，及时发现服务问题并修复。可以利用监控数据来进行根本原因分析（RCA）。<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="开始安装"><a href="#开始安装" class="headerlink" title="开始安装"></a>开始安装</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs ini">1. 解压下载的代码包<br>wget https://github.com/prometheus-operator/kube-prometheus/archive/refs/tags/v0.13.0.zip<br>unzip kube-prometheus-0.13.0.zip<br>rm -f kube-prometheus-0.13.0.zip &amp;&amp; cd kube-prometheus-0.13.0<br><br>2. 这里先看下有哪些镜像<br><span class="hljs-comment"># find ./ -type f |xargs egrep &#x27;image: quay.io|image: registry.k8s.io|image: grafana|image: docker.io&#x27;|awk &#x27;&#123;print $3&#125;&#x27;|sort|uniq</span><br><br>quay.io/prometheus-operator/prometheus-config-reloader:v0.67.1  <span class="hljs-comment"># 注意：这个镜像配置比较特殊，上面命令过滤不出来</span><br><br>grafana/grafana:9.5.3<br>docker.io/cloudnativelabs/kube-router<br>quay.io/brancz/kube-rbac-proxy:v0.14.2<br>quay.io/fabxc/prometheus_demo_service<br>quay.io/prometheus/alertmanager:v0.26.0<br>quay.io/prometheus/blackbox-exporter:v0.24.0<br>quay.io/prometheus/node-exporter:v1.6.1<br>quay.io/prometheus-operator/prometheus-operator:v0.67.1<br>quay.io/prometheus/prometheus:v2.46.0<br>registry.k8s.io/kube-state-metrics/kube-state-metrics:v2.9.2<br>registry.k8s.io/prometheus-adapter/prometheus-adapter:v0.11.1<br><br><span class="hljs-comment"># 由于上面的镜像中，有部分国内网络无法正常摘取，所以博哥将上述所有镜像已转存至docker hub上，用下面命令批量替换下镜像地址即可</span><br><br>find ./ -type f |xargs  sed -ri &#x27;s+quay.io/.*/+docker.io/bogeit/+g&#x27;<br>find ./ -type f |xargs  sed -ri &#x27;s+docker.io/cloudnativelabs/+docker.io/bogeit/+g&#x27;<br>find ./ -type f |xargs  sed -ri &#x27;s+grafana/+docker.io/bogeit/+g&#x27;<br>find ./ -type f |xargs  sed -ri &#x27;s+registry.k8s.io/.*/+docker.io/bogeit/+g&#x27;<br><br>3. 开始创建所有服务<br>kubectl create -f manifests/setup<br>kubectl create -f manifests/<br>过一会查看创建结果：<br>kubectl -n monitoring get all<br>kubectl -n monitoring get pod -w<br><br><span class="hljs-comment"># 附：清空上面部署的prometheus所有服务：</span><br>kubectl delete <span class="hljs-attr">--ignore-not-found</span>=<span class="hljs-literal">true</span> -f manifests/ -f manifests/setup<br><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="访问下prometheus的UI"><a href="#访问下prometheus的UI" class="headerlink" title="访问下prometheus的UI"></a>访问下prometheus的UI</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># vim prometheus-ingress.yaml</span><br>apiVersion: networking.k8s.io/v1<br>kind: Ingress<br>metadata:<br>  namespace: monitoring  <span class="hljs-comment">#一定要和sv ep 要在一个命名空间</span><br>  name: prometheus<br>spec:<br>  rules:<br>  - host: prometheus.k8s.com<br>    http:<br>      paths:<br>      - backend:<br>          service:<br>            name: prometheus-k8s<br>            port:<br>              number: 9090<br>        path: /<br>        pathType: Prefix<br><br><br><span class="hljs-comment"># kubectl -n monitoring apply -f prometheus-ingress.yaml</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="grafana-ingress创建"><a href="#grafana-ingress创建" class="headerlink" title="grafana ingress创建"></a><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=grafana&spm=1001.2101.3001.7020">grafana</a> ingress创建</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># vim grafana-ingress.yaml</span><br>apiVersion: networking.k8s.io/v1<br>kind: Ingress<br>metadata:<br>  namespace: monitoring  <span class="hljs-comment">#一定要和sv ep 要在一个命名空间</span><br>  name: grafana<br>spec:<br>  rules:<br>  - host: grafana.k8s.com<br>    http:<br>      paths:<br>      - backend:<br>          service:<br>            name: grafana<br>            port:<br>              number: 3000<br>        path: /<br>        pathType: Prefix<br><br><br><span class="hljs-comment"># kubectl -n monitoring apply -f grafana-ingress.yaml</span><br><br>grafana 账号密码都是admin<br><br></code></pre></td></tr></table></figure>
+
+<p>注意：删除自带的网络策略，否则访问服务都会被阻塞</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini">kubectl -n monitoring delete networkpolicies.networking.k8s.io --all<br></code></pre></td></tr></table></figure>
+
+<p>通过ingress的</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs html">访问的流程是 通过命名空间 ingress-nginx  下面svc 关联的po去类似nginx的   <br>就是这个pod的ip 加上 svc暴漏的端口去代理 grafana.k8s.com  或者是 prometheus.k8s.com<br>grafana.k8s.com:3000      prometheus.k8s.com:3000<br><br> kubectl get svc -n ingress-nginx <br>NAME                                 TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE<br>ingress-nginx-controller             NodePort   10.96.186.188   <span class="hljs-tag">&lt;<span class="hljs-name">none</span>&gt;</span>        80:30000/TCP,443:31388/TCP   7d3h<br><br> kubectl get po -n ingress-nginx  -o wide<br>NAME                             READY   STATUS    RESTARTS        AGE     IP               NODE        NOMINATED NODE   READINESS GATES<br>ingress-nginx-controller-x84p4   1/1     Running   6 (5m20s ago)   8m31s   192.168.85.129   k8s-node1   <span class="hljs-tag">&lt;<span class="hljs-name">none</span>&gt;</span>           <span class="hljs-tag">&lt;<span class="hljs-name">none</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="kube-controller-manager和kube-scheduler被监控"><a href="#kube-controller-manager和kube-scheduler被监控" class="headerlink" title="kube-controller-manager和kube-scheduler被监控"></a>kube-controller-manager和kube-scheduler被监控</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 这里我们发现这两服务监听的IP是0.0.0.0 正常</span><br><span class="hljs-comment"># ss -tlnp|egrep &#x27;controller|schedule&#x27;</span><br>LISTEN 0      32768              *:10257            *:*    users:((&quot;kube-controller&quot;,<span class="hljs-attr">pid</span>=<span class="hljs-number">3528</span>,fd=<span class="hljs-number">3</span>))                                                                                                                            <br>LISTEN 0      32768              *:10259            *:*    users:((&quot;kube-scheduler&quot;,<span class="hljs-attr">pid</span>=<span class="hljs-number">837</span>,fd=<span class="hljs-number">3</span>))           <br>-----------------------------------------------------------------------------------------------------------<br>如果是127.0.0.1:10257  解决办法如下<br><br>kubectl edit po kube-controller-manager-k8s-master -n kube-system       - <span class="hljs-attr">--bind-address</span>=<span class="hljs-number">0.0</span>.<span class="hljs-number">0.0</span><br><br><br>然后因为K8s的这两上核心组件我们是以二进制形式部署的，为了能让K8s上的prometheus能发现，我们需要来创建相应的service和endpoints来将其关联起来<br>这里面有所以不需要创建servicemonitoring<br>kubectl get servicemonitors.monitoring.coreos.com -A<br>NAMESPACE    NAME                      AGE<br>monitoring   alertmanager-main         28h<br>monitoring   blackbox-exporter         28h<br>monitoring   coredns                   28h<br>monitoring   grafana                   28h<br>monitoring   kube-apiserver            28h<br>monitoring   kube-controller-manager   28h<br>monitoring   kube-scheduler            28h<br>monitoring   kube-state-metrics        28h<br>monitoring   kubelet                   28h<br>monitoring   node-exporter             28h<br>monitoring   prometheus-adapter        28h<br>monitoring   prometheus-k8s            28h<br>monitoring   prometheus-operator       28h<br>------------------------------------------------------------------------------------------------------<br>apiVersion: v1<br>kind: Service<br>metadata:<br>  namespace: kube-system<br>  name: kube-controller-manager<br>  labels:<br>    app.kubernetes.io/name: kube-controller-manager<br>spec:<br>  type: ClusterIP<br>  clusterIP: None<br>  ports:<br>  - name: https-metrics<br>    port: 10257         <span class="hljs-comment">#默认端口</span><br>    targetPort: 10257<br>    protocol: TCP<br><br>---<br>apiVersion: v1<br>kind: Endpoints<br>metadata:<br>  labels:<br>    app.kubernetes.io/name: kube-controller-manager<br>  name: kube-controller-manager<br>  namespace: kube-system<br>subsets:<br>- addresses:<br>  - ip: 192.168.85.128   <span class="hljs-comment">#这个pod所对应的ip 如果有多个ip就写多个</span><br>  ports:<br>  - name: https-metrics<br>    port: 10257<br>    protocol: TCP<br><br>---<br><br>apiVersion: v1<br>kind: Service<br>metadata:<br>  namespace: kube-system<br>  name: kube-scheduler<br>  labels:<br>    app.kubernetes.io/name: kube-scheduler<br>spec:<br>  type: ClusterIP<br>  clusterIP: None<br>  ports:<br>  - name: https-metrics<br>    port: 10259<br>    targetPort: 10259<br>    protocol: TCP<br><br>---<br>apiVersion: v1<br>kind: Endpoints<br>metadata:<br>  labels:<br>    app.kubernetes.io/name: kube-scheduler<br>  name: kube-scheduler<br>  namespace: kube-system<br>subsets:<br>- addresses:<br>  - ip: 192.168.85.128    <span class="hljs-comment">#这个pod所对应的ip 如果有多个ip就写多个</span><br>  ports:<br>  - name: https-metrics<br>    port: 10259<br>    protocol: TCP<br>----------------------------------------------------------------------------------<br>将上面的yaml配置保存为repair-prometheus.yaml，然后创建它<br><br>kubectl apply -f repair-prometheus.yaml<br><br>创建完成后确认下<br><br><span class="hljs-comment"># kubectl -n kube-system get svc |egrep &#x27;controller|scheduler&#x27;</span><br>kube-controller-manager   ClusterIP   None            &lt;none&gt;        10252/TCP                      58s<br>kube-scheduler            ClusterIP   None            &lt;none&gt;        10251/TCP                      58s<br><br>然后再返回prometheus UI处，耐心等待一会，就能看到已经被发现了<br><br>serviceMonitor/monitoring/kube-controller-manager/0 (2/2 up)<br>serviceMonitor/monitoring/kube-scheduler/0 (2/2 up)<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="监控etcd"><a href="#监控etcd" class="headerlink" title="监控etcd"></a>监控etcd</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><code class="hljs ini">利用下面命令，我们可以看到ETCD都暴露出了哪些监控指标出来<br>curl -k --cacert /etc/kubernetes/pki/ca.crt --cert /etc/kubernetes/pki/etcd/server.crt    --key /etc/kubernetes/pki/etcd/server.key https://192.168.85.128:2379/metrics<br>--------------------------------------------------------------------------------------------<br>上面查看没问题后，接下来我们开始进行配置使ETCD能被prometheus发现并监控<br><br><span class="hljs-comment"># 首先把ETCD的证书创建为secret</span><br>kubectl -n monitoring create secret generic etcd-certs <span class="hljs-attr">--from-file</span>=/etc/kubernetes/pki/ca.crt    --from-file=/etc/kubernetes/pki/etcd/server.crt  --from-file=/etc/kubernetes/pki/etcd/server.key <br><br><span class="hljs-comment"># 接着在prometheus里面引用这个secrets</span><br>kubectl -n monitoring edit prometheus k8s <br><br>spec:<br>...<br>  secrets:<br>  - etcd-certs<br><br><span class="hljs-comment"># 保存退出后，prometheus会自动重启服务pod以加载这个secret配置，过一会，我们进pod来查看下是不是已经加载到ETCD的证书了</span><br><span class="hljs-comment"># kubectl -n monitoring exec -it prometheus-k8s-0 -c prometheus  -- sh </span><br>/prometheus $ ls /etc/prometheus/secrets/etcd-certs/<br>ca.pem        etcd-key.pem  etcd.pem<br><br>-----------------------------------------------------------------------------------------------<br>因为etcd没有servicemonitoring所以要创建svc  ep 和 servicemonitoring<br>接下来准备创建service、endpoints以及ServiceMonitor的yaml配置<br><br>注意替换下面的NODE节点IP为实际ETCD所在NODE内网IP<br><br><span class="hljs-comment"># vim prometheus-etcd.yaml </span><br>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: etcd-k8s<br>  namespace: monitoring<br>  labels:<br>    k8s-app: etcd<br>spec:<br>  type: ClusterIP<br>  clusterIP: None<br>  ports:<br>  - name: api<br>    port: 2379<br>    protocol: TCP<br>---<br>apiVersion: v1<br>kind: Endpoints<br>metadata:<br>  name: etcd-k8s<br>  namespace: monitoring<br>  labels:<br>    k8s-app: etcd<br>subsets:<br>- addresses:<br>  - ip: 192.168.156.128      <span class="hljs-comment">#etcd在哪就写哪的ip多个就写多个</span><br>  ports:<br>  - name: api<br>    port: 2379<br>    protocol: TCP<br>---<br>apiVersion: monitoring.coreos.com/v1<br>kind: ServiceMonitor<br>metadata:<br>  name: etcd-k8s<br>  namespace: monitoring<br>  labels:<br>    k8s-app: etcd-k8s<br>spec:<br>  jobLabel: k8s-app<br>  endpoints:<br>  - port: api<br>    interval: 30s<br>    scheme: https<br>    tlsConfig:<br>      caFile: /etc/prometheus/secrets/etcd-certs/ca.crt<br>      certFile: /etc/prometheus/secrets/etcd-certs/server.crt<br>      keyFile: /etc/prometheus/secrets/etcd-certs/server.key<br>      <span class="hljs-comment">#use insecureSkipVerify only if you cannot use a Subject Alternative Name</span><br>      insecureSkipVerify: true <br>  selector:<br>    matchLabels:<br>      k8s-app: etcd<br>  namespaceSelector:<br>    matchNames:<br>    - monitoring<br>-------------------------------------------------------------------------    <br>    <br>    <br>    开始创建上面的资源<br><br><span class="hljs-comment"># kubectl apply -f prometheus-etcd.yaml </span><br>service/etcd-k8s created<br>endpoints/etcd-k8s created<br>servicemonitor.monitoring.coreos.com/etcd-k8s created<br><br>过一会，就可以在prometheus UI上面看到ETCD集群被监控了<br><br>serviceMonitor/monitoring/etcd-k8s/0 (3/3 up)<br><br>------------------------------------------------------------------------------<br>在grafana官网模板中心搜索etcd，下载这个json格式的模板文件<br>https://grafana.com/grafana/dashboards/3070-etcd/<br><br>然后打开自己先部署的grafana首页，<br>点击左上边菜单栏HOME --- Data source --- Add data source --- 选择 Prometheus<br>查看prometheus的详细地址 并编辑进去保存：<br><span class="hljs-comment"># kubectl -n monitoring get secrets grafana-datasources -o yaml</span><br><br>再点击右上角 +^ Import dashboard --- <br>点击Upload .json File 按钮，上传上面下载好的json文件 3070_rev3.json，<br>点击Import，即可显示etcd集群的图形监控信息<br></code></pre></td></tr></table></figure>
+
+<h2 id="监控ingress"><a href="#监控ingress" class="headerlink" title="监控ingress"></a>监控ingress</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><code class="hljs ini">注意 因为prometheus 命名空间是 monitoring   <br>        ingress的命名空间 是 ingress-nginx  需要对这个prometheus命名空间绑定角色<br> ------------------------------------------------------------------------------------<br>cat cr.yaml <br>apiVersion: rbac.authorization.k8s.io/v1<br>kind: ClusterRole<br>metadata:<br>  name: prometheus-access-all-namespaces<br>rules:<br>  - apiGroups: <span class="hljs-section">[&quot;&quot;]</span><br>    resources: <span class="hljs-section">[&quot;services&quot;, &quot;endpoints&quot;, &quot;pods&quot;]</span><br>    verbs: <span class="hljs-section">[&quot;get&quot;, &quot;list&quot;]</span><br>----------------------------------------------------------------<br>cat crb.yaml <br>apiVersion: rbac.authorization.k8s.io/v1<br>kind: ClusterRoleBinding<br>metadata:<br>  name: prometheus-access-all-namespaces-binding<br>subjects:<br>  - kind: ServiceAccount<br>    name: prometheus-k8s<br>    namespace: monitoring<br>roleRef:<br>  kind: ClusterRole<br>  name: prometheus-access-all-namespaces<br>  apiGroup: rbac.authorization.k8s.io<br>-----------------------------------------------------------------<br>因为前面ingress-nginx服务是以daemonset形式部署的，并且映射了自己的端口到宿主机上，那么我可以直接用pod运行NODE上的IP来看下metrics<br><br>kubectl -n ingress-nginx get pod  -o wide<br>NAME                             READY   STATUS    RESTARTS   AGE   IP               NODE        NOMINATED NODE   READINESS GATES<br>ingress-nginx-controller-mbs95   1/1     Running   0          74m   192.168.85.129   k8s-node1   &lt;none&gt;           &lt;none&gt;<br><br><br><span class="hljs-comment"># 开启metrics指标</span><br><span class="hljs-comment"># kubectl -n ingress-nginx  edit ds ingress-nginx-controller</span><br><span class="hljs-comment"># 搜索 metrics   ， 找到  - --enable-metrics=  设置为 true</span><br><span class="hljs-comment">#  curl  192.168.85.129:10254/metrics</span><br>------------------------------------------------------------------------------<br>创建 servicemonitor配置让prometheus能发现ingress-nginx的metrics<br>cat ingress.servicemonitoring.yaml <br>apiVersion: monitoring.coreos.com/v1<br>kind: ServiceMonitor<br>metadata:<br>  name: ingress-servicemonitor <br>  namespace: monitoring <br>  labels:<br>    app.kubernetes.io/name: ingress-nginx<br>spec:<br>  jobLabel: ingress-test <br>  endpoints:<br>  - port: app <br>    interval: 30s<br>    scheme: http<br>    path: /metrics<br>  selector:<br>    matchLabels:<br>      app.kubernetes.io/name: ingress-nginx<br>  namespaceSelector:<br>    matchNames:<br>    - ingress-nginx <br>-------------------------------------------------------------------<br>创建它<br><br><span class="hljs-comment"># kubectl apply -f ingress-nginx-servicemonitor.yaml </span><br>servicemonitor.monitoring.coreos.com/nginx-ingress-scraping created<br><span class="hljs-comment"># kubectl  get servicemonitors.monitoring.coreos.com  -n monitoring </span><br>NAME                      AGE<br>alertmanager-main         32h<br>blackbox-exporter         32h<br>coredns                   32h<br>etcd-k8s                  27h<br>grafana                   32h<br>ingress-servicemonitor    78m<br>kube-apiserver            32h<br>kube-controller-manager   32h<br>kube-scheduler            32h<br>kube-state-metrics        32h<br>kubelet                   32h<br>node-exporter             32h<br>prometheus-adapter        32h<br>prometheus-k8s            32h<br>prometheus-operator       32h<br><br><br>再到prometheus UI上看下，发现已经有了<br><br>serviceMonitor/monitoring/ingress-servicemonitor/0 (1/1 up)<br><br>下载grafana模板导入使用<br><br>https://grafana.com/grafana/dashboards/14314-kubernetes-nginx-ingress-controller-nextgen-devops-nirvana/<br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-chain-item">云原生</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="print-no-link">#云原生</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>prometheus监控</div>
+      <div>https://www.tiantian123.asia/2025/05/26/监控/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>lht</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/26/%E4%BD%BF%E7%94%A8helm%E5%AE%89%E8%A3%85loki/" title="loki安装和配置">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">loki安装和配置</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/05/26/redis%E9%AB%98%E5%8F%AF%E7%94%A8/" title="redis高可用">
+                        <span class="hidden-mobile">redis高可用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+<div>
+  <span id="timeDate">正在载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("08/17/2020 00:00:00");
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "\u{1F680} 已持续航行&nbsp"+dnum+"&nbsp天";  
+      document.getElementById("times").innerHTML = hnum + "&nbsp时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";
+  }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/stars.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

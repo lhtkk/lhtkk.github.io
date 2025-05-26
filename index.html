@@ -229,15 +229,15 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h2 class="index-header">
         
-        <a href="/2025/05/26/hello-world/" target="_self">
-          Hello World
+        <a href="/2025/05/26/istio/" target="_self">
+          istio
         </a>
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/hello-world/" target="_self">
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/istio/" target="_self">
         <div>
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick
+          准备工作安装istio1234567# curl -L https://istio.io/downloadIstio | sh -# cd istio-1.*# export PATH=$PWD/bin:$PATH安装istio基础组件# istioctl install --set profile=demo -y验证是否成功# kubectl get pods -n istio-system
         </div>
       </a>
 
@@ -245,12 +245,528 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2025-05-26 21:25" pubdate>
+            <time datetime="2025-05-26 23:30" pubdate>
               2025-05-26
             </time>
           </div>
         
         
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-chain-item">云原生</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/">#云原生</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/26/%E4%BD%BF%E7%94%A8helm%E5%AE%89%E8%A3%85loki/" target="_self">
+          loki安装和配置
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/%E4%BD%BF%E7%94%A8helm%E5%AE%89%E8%A3%85loki/" target="_self">
+        <div>
+          使用helm安装loki1.加入repo12# helm repo add grafana https://grafana.github.io/helm-charts#helm repo update  2.安装loki12345678910111213141516171819202122232425262728293031323334353637#helm  search  repo lokiN
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-26 23:29" pubdate>
+              2025-05-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-chain-item">云原生</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/">#云原生</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/26/%E7%9B%91%E6%8E%A7/" target="_self">
+          prometheus监控
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/%E7%9B%91%E6%8E%A7/" target="_self">
+        <div>
+          整理流程12345678910111213141516171819202122232425262728293031323334353637383940使用 Prometheus 结合 Kubernetes Operator 来监控服务的整体流程，没有包含 YAML 配置文件，只讲解步骤：1. 安装 Prometheus Operator首先，确保在 Kubernetes 集群中安装了 Promet
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-26 23:28" pubdate>
+              2025-05-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/" class="category-chain-item">云原生</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/">#云原生</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/26/redis%E9%AB%98%E5%8F%AF%E7%94%A8/" target="_self">
+          redis高可用
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/redis%E9%AB%98%E5%8F%AF%E7%94%A8/" target="_self">
+        <div>
+          主从的原理就是 从节点向[主节点]发送一个syn请求 主节点收到请求 在后台创建一个rdb快照文件发送给从节点 ，再在暂存空间记录创建到发送完成这段时间的所有写命令，等rdb发送完成再发送写命令 从节点加载rdb和写命令完成主从同步  哨兵就是通过ping 如果通不了了 就会告知其他的哨兵 都发现ping不了了则标记下线 选举出新的主节点 !! 直接开整 首先最简单的 直接配置不用docker的操
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-26 23:28" pubdate>
+              2025-05-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-chain-item">中间件</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">#中间件</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/26/kafka_4.0.0_(%E7%94%A8kraft%E6%A8%A1%E5%BC%8F)/" target="_self">
+          kafka安装和配置
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/kafka_4.0.0_(%E7%94%A8kraft%E6%A8%A1%E5%BC%8F)/" target="_self">
+        <div>
+          kafka 4.0.0 (用kraft模式)1.安装kafka 需要有jdk环境1#wget https://downloads.apache.org/kafka/4.0.0/kafka_2.13-4.0.0.tgz  1.1修改配置文件123456789101112# cat config/server.properties node.id=1 #唯一的值log.dirs=/data/kafka
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-26 23:27" pubdate>
+              2025-05-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/" class="category-chain-item">中间件</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/">#中间件</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/26/%E4%B8%93%E5%B1%9E%E5%8D%9A%E5%AE%A2/" target="_self">
+          搭建博客
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/%E4%B8%93%E5%B1%9E%E5%8D%9A%E5%AE%A2/" target="_self">
+        <div>
+          搭建自己的博客 我这里用的是云服务器 centos的 1.安装git和nodejs1234567891011121314151617使用非root用户!!!!git下载地址https://git-scm.com/downloads#yum install -y gitnodejs下载地址https://nodejs.org/en/download/#curl -o- https://raw.git
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-26 23:26" pubdate>
+              2025-05-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/bolg/" class="category-chain-item">bolg</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/blog/">#blog</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/26/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" target="_self">
+          内网穿透
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" target="_self">
+        <div>
+          1.公网服务器（服务端s端）123456789101112#cat frps.ini [common]bindPort = 7000vhostHTTPPort = 8080 # 访问公网ip跳转到 内网的哪个ip[ssh]type = tcpremote_port = 6001   # 公网端口 6001，用于外部访问local_ip = 127.0.0.1 # 本地的 SSH 地址local_p
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-26 23:25" pubdate>
+              2025-05-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%BD%91%E7%BB%9C/" class="category-chain-item">网络</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BD%91%E7%BB%9C/">#网络</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/05/26/K8S%E7%AC%94%E8%AE%B0/" target="_self">
+          k8s笔记
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/05/26/K8S%E7%AC%94%E8%AE%B0/" target="_self">
+        <div>
+          基本概念1234567891011121314151617有状态  需要依赖本地的 redis mysql无状态 不需要依赖本地的 nginx appach java mysql 两个容易由于mysql可能会故障要重启 所以应该直接links 容器名 保持连接无状态服务rc(replication)  扩缩容  rs(replicaset) 在rc的基础上可以选择标签deployment 在rs基
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-05-26 23:24" pubdate>
+              2025-05-26
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/k8s/" class="category-chain-item">k8s</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/k8s/">#k8s</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h2 class="index-header">
+        
+        <a href="/2025/04/25/CICD/" target="_self">
+          CICD
+        </a>
+      </h2>
+
+      
+      <a class="index-excerpt index-excerpt__noimg" href="/2025/04/25/CICD/" target="_self">
+        <div>
+          CI&#x2F;CDgit基本操作1234567891011121314151617181920git init                      //初始化 git add main.cpp              //将某一个文件添加到暂存区 git add .                     //将文件夹下的所有的文件添加到暂存区 git commit -m ‘note‘
+        </div>
+      </a>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2025-04-25 10:00" pubdate>
+              2025-04-25
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3 d-flex align-items-center">
+            <i class="iconfont icon-category"></i>
+            
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4/" class="category-chain-item">自动化运维</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4/">#自动化运维</a>
+            
+          </div>
         
       </div>
     </article>

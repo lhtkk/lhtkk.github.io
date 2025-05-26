@@ -1,0 +1,780 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="lht">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基本概念1234567891011121314151617有状态  需要依赖本地的 redis mysql无状态 不需要依赖本地的 nginx appach java mysql 两个容易由于mysql可能会故障要重启 所以应该直接links 容器名 保持连接无状态服务rc(replication)  扩缩容  rs(replicaset) 在rc的基础上可以选择标签deployment 在rs基">
+<meta property="og:type" content="article">
+<meta property="og:title" content="k8s笔记">
+<meta property="og:url" content="https://www.tiantian123.asia/2025/05/26/K8S%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="lhtのblog">
+<meta property="og:description" content="基本概念1234567891011121314151617有状态  需要依赖本地的 redis mysql无状态 不需要依赖本地的 nginx appach java mysql 两个容易由于mysql可能会故障要重启 所以应该直接links 容器名 保持连接无状态服务rc(replication)  扩缩容  rs(replicaset) 在rc的基础上可以选择标签deployment 在rs基">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:\Users\%E5%88%98%E6%83%A0%E6%B6%9B\Desktop\%E5%8F%A9%E4%B8%81%E7%8B%BC-k8s\images\1742199651816.png">
+<meta property="article:published_time" content="2025-05-26T15:24:29.734Z">
+<meta property="article:modified_time" content="2025-05-26T15:24:29.731Z">
+<meta property="article:author" content="lht">
+<meta property="article:tag" content="k8s">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:\Users\%E5%88%98%E6%83%A0%E6%B6%9B\Desktop\%E5%8F%A9%E4%B8%81%E7%8B%BC-k8s\images\1742199651816.png">
+  
+  
+  
+  <title>k8s笔记 - lhtのblog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.tiantian123.asia","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong class="navbar-title">lhtのblog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="k8s笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-05-26 23:24" pubdate>
+          2025年5月26日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          43 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">k8s笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs ini">有状态  需要依赖本地的 redis mysql<br>无状态 不需要依赖本地的 nginx appach <br>java mysql 两个容易由于mysql可能会故障要重启 所以应该直接links 容器名 保持连接<br>无状态服务<br>rc(replication)  扩缩容  <br>rs(replicaset) 在rc的基础上可以选择标签<br>deployment 在rs基础上平滑扩缩容 平滑升级/回滚  暂停与恢复(比如一个地方代码想要改5处 它是自动升级的所以可以先暂停 等代码都改好了再恢复)<br>有状态服务<br>statefulset  <br>redis mysql都要基于主从所以需要按照顺序<br>稳定的持久化 基于pvc(volumeclaimtemplate) 稳定的网络标识 headless service(dns类似 服务名绑定了ip) 有序部署有序扩展  有序收缩有序删除<br>services<br>node与node的之间暴露的访问的端口<br>ingress<br>外部想要访问内部的端口<br>configmap<br>配置文件的映射<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="资源调度控制器"><a href="#资源调度控制器" class="headerlink" title="资源调度控制器"></a>资源调度控制器</h1><h2 id="pod"><a href="#pod" class="headerlink" title="pod"></a>pod</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs ini">cat nginx-pod.yaml<br><br>apiVersion: v1 <span class="hljs-comment"># api 文档版本</span><br>kind: Pod  <span class="hljs-comment"># 资源对象类型，也可以配置为像Deployment、StatefulSet这一类的对象</span><br>metadata: <span class="hljs-comment"># Pod 相关的元数据，用于描述 Pod 的数据</span><br>  name: nginx-demo <span class="hljs-comment"># Pod 的名称</span><br>  labels: <span class="hljs-comment"># 定义 Pod 的标签</span><br>    type: app <span class="hljs-comment"># 自定义 label 标签，名字为 type，值为 app</span><br>    test: 1.0.0 <span class="hljs-comment"># 自定义 label 标签，描述 Pod 版本号</span><br>  namespace: &#x27;default&#x27; <span class="hljs-comment"># 命名空间的配置</span><br>spec: <span class="hljs-comment"># 期望 Pod 按照这里面的描述进行创建</span><br>  containers: <span class="hljs-comment"># 对于 Pod 中的容器描述</span><br>  - name: nginx <span class="hljs-comment"># 容器的名称</span><br>    image: nginx:1.7.9 <span class="hljs-comment"># 指定容器的镜像</span><br>    imagePullPolicy: IfNotPresent <span class="hljs-comment"># 镜像拉取策略，指定如果本地有就用本地的，如果没有就拉取远程的</span><br>    command: <span class="hljs-comment"># 指定容器启动时执行的命令</span><br>    - nginx<br>    - -g<br>    - &#x27;daemon off<span class="hljs-comment">;&#x27; # nginx -g &#x27;daemon off;&#x27;</span><br>    workingDir: /usr/share/nginx/html <span class="hljs-comment"># 定义容器启动后的工作目录</span><br>    ports:<br>    - name: http <span class="hljs-comment"># 端口名称</span><br>      containerPort: 80 <span class="hljs-comment"># 描述容器内要暴露什么端口</span><br>      protocol: TCP <span class="hljs-comment"># 描述该端口是基于哪种协议通信的</span><br>    env: <span class="hljs-comment"># 环境变量</span><br>    - name: JVM_OPTS <span class="hljs-comment"># 环境变量名称</span><br>      value: &#x27;-Xms128m -Xmx128m&#x27; <span class="hljs-comment"># 环境变量的值</span><br>    reousrces:<br>      requests: <span class="hljs-comment"># 最少需要多少资源</span><br>        cpu: 100m <span class="hljs-comment"># 限制 cpu 最少使用 0.1 个核心</span><br>        memory: 128Mi <span class="hljs-comment"># 限制内存最少使用 128兆</span><br>      limits: <span class="hljs-comment"># 最多可以用多少资源</span><br>        cpu: 200m <span class="hljs-comment"># 限制 cpu 最多使用 0.2 个核心</span><br>        memory: 256Mi <span class="hljs-comment"># 限制 最多使用 256兆</span><br>  restartPolicy: OnFailure <span class="hljs-comment"># 重启策略，只有失败的情况才会重启</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: apps/v1 <span class="hljs-comment"># deployment api 版本</span><br>kind: Deployment <span class="hljs-comment"># 资源类型为 deployment</span><br>metadata: <span class="hljs-comment"># 元信息</span><br>  labels: <span class="hljs-comment"># 标签</span><br>    app: nginx-deploy <span class="hljs-comment"># 具体的 key: value 配置形式</span><br>  name: nginx-deploy <span class="hljs-comment"># deployment 的名字</span><br>  namespace: default <span class="hljs-comment"># 所在的命名空间</span><br>spec:<br>  replicas: 1 <span class="hljs-comment"># 期望副本数</span><br>  revisionHistoryLimit: 10 <span class="hljs-comment"># 进行滚动更新后，保留的历史版本数</span><br>  selector: <span class="hljs-comment"># 选择器，用于找到匹配的 RS</span><br>    matchLabels: <span class="hljs-comment"># 按照标签匹配</span><br>      app: nginx-deploy <span class="hljs-comment"># 匹配的标签key/value</span><br>  strategy: <span class="hljs-comment"># 更新策略</span><br>    rollingUpdate: <span class="hljs-comment"># 滚动更新配置</span><br>      maxSurge: 25% <span class="hljs-comment"># 进行滚动更新时，更新的个数最多可以超过期望副本数的个数/比例</span><br>      maxUnavailable: 25% <span class="hljs-comment"># 进行滚动更新时，最大不可用比例更新比例，表示在所有副本数中，最多可以有多少个不更新成功</span><br>    type: RollingUpdate <span class="hljs-comment"># 更新类型，采用滚动更新</span><br>  template: <span class="hljs-comment"># pod 模板</span><br>    metadata: <span class="hljs-comment"># pod 的元信息</span><br>      labels: <span class="hljs-comment"># pod 的标签</span><br>        app: nginx-deploy<br>    spec: <span class="hljs-comment"># pod 期望信息</span><br>      containers: <span class="hljs-comment"># pod 的容器</span><br>      - image: nginx:1.7.9 <span class="hljs-comment"># 镜像</span><br>        imagePullPolicy: IfNotPresent <span class="hljs-comment"># 拉取策略</span><br>        name: nginx <span class="hljs-comment"># 容器名称</span><br>      restartPolicy: Always <span class="hljs-comment"># 重启策略</span><br>      terminationGracePeriodSeconds: 30 <span class="hljs-comment"># 删除操作最多宽限多长时间</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="关于deploy"><a href="#关于deploy" class="headerlink" title="关于deploy"></a>关于deploy</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs ini">kubectl scale <span class="hljs-attr">--replicas</span>=<span class="hljs-number">5</span> deploy nginx-deploy<br><span class="hljs-comment">#将副本数改成5</span><br>kubectl rollout history deploy nginx-deploy <br><span class="hljs-comment">#查看所有滚动的版本</span><br>kubectl rollout deploy nginx-deploy <span class="hljs-attr">--revision</span>=<span class="hljs-number">2</span><br><span class="hljs-comment">#查看版本2的具体信息</span><br>kubectl rollout undo  deploy nginx-deploy <span class="hljs-attr">--to-revision</span>=<span class="hljs-number">2</span><br><span class="hljs-comment">#回滚到2的版本</span><br>kubect rollout status deploy nginx-deploy<br><span class="hljs-comment">#查看回滚的状态</span><br>kubectl rollout pause deploy nginx-deploy<br><span class="hljs-comment">#暂停deployment自动更新</span><br>kubectl rollout rusume deploy nginx-deploy<br><span class="hljs-comment">#恢复deployment更新</span><br>kubectl rollout restart deploy nginx-deploy<br><span class="hljs-comment">#重新加载配置</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="StatefulSet"><a href="#StatefulSet" class="headerlink" title="StatefulSet"></a>StatefulSet</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs ini">---<br>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: nginx<br>  labels:<br>    app: nginx<br>spec:<br>  ports:<br>  - port: 80<br>    name: web<br>  clusterIP: None<br>  selector:<br>    app: nginx     <br>---<br>apiVersion: apps/v1<br>kind: StatefulSet<br>metadata:<br>  name: web<br>spec:<br>  serviceName: &quot;nginx&quot;<br>  replicas: 2<br>  selector:<br>   matchLabels:<br>    app: nginx<br>  template:<br>    metadata:<br>      labels:<br>        app: nginx<br>    spec:<br>      containers:<br>      - name: nginx<br>        image: nginx:1.2.1<br>        ports:<br>        - containerPort: 80<br>          name: web<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="副本扩缩容"><a href="#副本扩缩容" class="headerlink" title="副本扩缩容"></a>副本扩缩容</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 扩容</span><br>$ kubectl scale statefulset web <span class="hljs-attr">--replicas</span>=<span class="hljs-number">5</span><br><br><span class="hljs-comment"># 缩容</span><br>$ kubectl patch statefulset web -p &#x27;&#123;&quot;spec&quot;:&#123;&quot;replicas&quot;:3&#125;&#125;&#x27;<br>$ kubectl scale statefulset web <span class="hljs-attr">--replicas</span>=<span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="更新机制"><a href="#更新机制" class="headerlink" title="更新机制"></a>更新机制</h3><h4 id="灰度发布（金丝雀）"><a href="#灰度发布（金丝雀）" class="headerlink" title="灰度发布（金丝雀）"></a>灰度发布（金丝雀）</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ini">  updateStrategy:<br>    rollingUpdate:<br>      partition: 0       <span class="hljs-comment">#改成几  大于等于的都会被更新</span><br>    type: RollingUpdate<br><br><br>利用滚动更新中的 partition 属性，可以实现简易的灰度发布的效果<br><br>例如我们有 5 个 pod，如果当前 partition 设置为 3，那么此时滚动更新时，只会更新那些 序号 &gt;= 3 的 pod<br><br>利用该机制，我们可以通过控制 partition 的值，来决定只更新其中一部分 pod，确认没有问题后再主键增大更新的 pod 数量，最终实现全部 pod 更新<br></code></pre></td></tr></table></figure>
+
+<h4 id="删除更新"><a href="#删除更新" class="headerlink" title="删除更新"></a>删除更新</h4><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini">  updateStrategy:<br>    type: OnDelete<br><br>只有在 pod 被删除时会进行更新操作<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="删除操作"><a href="#删除操作" class="headerlink" title="删除操作"></a>删除操作</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 删除 StatefulSet 和 Headless Service</span><br><span class="hljs-comment"># 级联删除：删除 statefulset 时会同时删除 pods</span><br>kubectl delete statefulset web<br><span class="hljs-comment"># 非级联删除：删除 statefulset 时不会删除 pods，删除 sts 后，pods 就没人管了，此时再删除 pod 不会重建的</span><br>kubectl deelte sts web <span class="hljs-attr">--cascade</span>=<span class="hljs-literal">false</span><br><span class="hljs-comment"># 删除 service</span><br>kubectl delete service nginx<br></code></pre></td></tr></table></figure>
+
+<h2 id="Daemonset"><a href="#Daemonset" class="headerlink" title="Daemonset"></a>Daemonset</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: apps/v1<br>kind: DaemonSet<br>metadata:<br>  name: fluentd<br>spec:<br>  selector:<br>    matchLabels:<br>      id: fluentd  <span class="hljs-comment"># 选择所有标签为 id: fluentd 的 Pods</span><br>  template:<br>    metadata:<br>      labels:<br>        app: logging<br>        id: fluentd<br>      name: fluentd<br>    spec:<br>      containers:<br>      - name: fluentd-es<br>        image: agilestacks/fluentd-elasticsearch:v1.3.0<br>        env:<br>         - name: FLUENTD_ARGS<br>           value: -qq<br>        volumeMounts:<br>         - name: containers<br>           mountPath: /var/lib/docker/containers<br>         - name: varlog<br>           mountPath: /varlog<br>      volumes:<br>         - hostPath:<br>             path: /var/lib/docker/containers<br>           name: containers<br>         - hostPath:<br>             path: /var/log<br>           name: varlog<br>      nodeSelector:<br>        aa: bb     <span class="hljs-comment">#标签有 aa=bb的 自动在node节点上创建pod</span><br>        <br>更新机制最好还是OnDelet 要不然每次更新都让所有的节点更新 消耗太多的资源        <br><br>        <br> kubectl label nodes k8s-node1 <span class="hljs-attr">aa</span>=bb<br> kubectl get no -l <span class="hljs-attr">aa</span>=bb<br>NAME        STATUS   ROLES    AGE   VERSION<br>k8s-node1   Ready    &lt;none&gt;   16h   v1.23.6<br>k8s-node2   Ready    &lt;none&gt;   16h   v1.23.6<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="HPA"><a href="#HPA" class="headerlink" title="HPA"></a>HPA</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs ini">实现 cpu 或内存的监控，首先有个前提条件是该对象必须配置了 resources.requests.cpu 或 resources.requests.memory 才可以，可以配置当 cpu/memory 达到上述配置的百分比后进行扩容或缩容<br><br>创建一个 HPA：<br>先准备一个好一个有做资源限制的 deployment<br>执行命令 kubectl autoscale deploy nginx-deploy <span class="hljs-attr">--cpu-percent</span>=<span class="hljs-number">20</span> --min=<span class="hljs-number">2</span> --max=<span class="hljs-number">5</span><br>通过 kubectl get hpa 可以获取 HPA 信息<br><br>测试：找到对应服务的 service，编写循环测试脚本提升内存与 cpu 负载<br>while true<span class="hljs-comment">; do wget -q -O- http://&lt;ip:port&gt; &gt; /dev/null ; done</span><br><br>可以通过多台机器执行上述命令，增加负载，当超过负载后可以查看 pods 的扩容情况 kubectl get pods<br><br>查看 pods 资源使用情况<br>kubectl top pods<br><br>扩容测试完成后，再关闭循环执行的指令，让 cpu 占用率降下来，然后过 5 分钟后查看自动缩容情况<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="selector和-模板中labels的关系"><a href="#selector和-模板中labels的关系" class="headerlink" title="selector和 模板中labels的关系"></a>selector和 模板中labels的关系</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ini">selector: <span class="hljs-comment"># 选择器，用于找到匹配的 RS</span><br>    matchLabels: <span class="hljs-comment"># 按照标签匹配</span><br>      app: nginx-deploy <span class="hljs-comment"># 匹配的标签key/value</span><br>  template: <span class="hljs-comment"># pod 模板</span><br>    metadata: <span class="hljs-comment"># pod 的元信息</span><br>      labels: <span class="hljs-comment"># pod 的标签</span><br>        app: nginx-deploy<br>        <br>        <br>        <br>来选择控制模板里app为 nginx-deploy的pod<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="探针"><a href="#探针" class="headerlink" title="探针"></a>探针</h1><h2 id="启动探针"><a href="#启动探针" class="headerlink" title="启动探针"></a>启动探针</h2><p>k8s 1.16 版本新增的探针，用于判断应用程序是否已经启动了。</p>
+<p>当配置了 startupProbe 后，会先禁用其他探针，直到 startupProbe 成功后，其他探针才会继续。</p>
+<p>作用：由于有时候不能准确预估应用一定是多长时间启动成功，因此配置另外两种方式不方便配置初始化时长来检测，而配置了 statupProbe 后，只有在应用启动成功了，才会执行另外两种探针，可以更加方便的结合使用另外两种探针使用。</p>
+<p>检测到&#x2F;api&#x2F;startup 则表示启动了</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini">startupProbe:<br> httpGet:<br>  path: /api/startup<br>  port: 80<br></code></pre></td></tr></table></figure>
+
+<h2 id="存活探针"><a href="#存活探针" class="headerlink" title="存活探针"></a>存活探针</h2><p>用于探测容器中的应用是否运行，如果探测失败，kubelet 会根据配置的重启策略进行重启，若没有配置，默认就认为容器启动成功，不会执行重启策略。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs ini">livenessProbe:<br> failureThreshold: 5       <span class="hljs-comment">#连续失败多少次 livenessProbe 才会触发容器重启。</span><br> httpGet:<br>  path: /health<br>  port: 8080<br>  scheme: HTTP            <span class="hljs-comment">#指定了请求使用的协议</span><br> initialDelaySeconds: 60  <span class="hljs-comment">#表示在容器启动后，Kubernetes 会等待 60 秒后才开始执行 livenessProbe。这通常用于等待容器的服                            务完全启动并能够响应健康检查。</span><br> periodSeconds: 10        <span class="hljs-comment">#表示每10秒执行一次 livenessProbe 检查</span><br> successThreshold: 1      <span class="hljs-comment">#表示容器只需要一次成功的 livenessProbe 检查，就被认为是健康的</span><br> timeoutSeconds: 5        <span class="hljs-comment">#表示如果 livenessProbe 请求在 5 秒内没有得到响应，则该检查会被认为失败</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="就绪探针"><a href="#就绪探针" class="headerlink" title="就绪探针"></a>就绪探针</h2><p>用于探测容器内的程序是否健康，它的返回值如果返回 success，那么就认为该容器已经完全启动，并且该容器是可以接收外部流量的。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs ini">readinessProbe:<br>  failureThreshold: 3 <span class="hljs-comment"># 错误次数</span><br>  httpGet:<br>    path: /ready<br>    port: 8181<br>    scheme: HTTP<br>  periodSeconds: 10 <span class="hljs-comment"># 间隔时间</span><br>  successThreshold: 1<br>  timeoutSeconds: 1<br></code></pre></td></tr></table></figure>
+
+<h1 id="探测方式"><a href="#探测方式" class="headerlink" title="探测方式"></a>探测方式</h1><h2 id="ExecAction（命令方式）"><a href="#ExecAction（命令方式）" class="headerlink" title="ExecAction（命令方式）"></a>ExecAction（命令方式）</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs INI">在容器内部执行一个命令，如果返回值为 0，则任务容器时健康的。<br><br>livenessProbe:<br>  exec:<br>    command:<br>      - cat<br>      - /health<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="TCPSocketAction（tcp方式）"><a href="#TCPSocketAction（tcp方式）" class="headerlink" title="TCPSocketAction（tcp方式）"></a>TCPSocketAction（tcp方式）</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs INI">通过 tcp 连接监测容器内端口是否开放，如果开放则证明该容器健康<br><br>livenessProbe:<br>  tcpSocket:<br>    port: 80<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="HTTPGetAction（http方式）"><a href="#HTTPGetAction（http方式）" class="headerlink" title="HTTPGetAction（http方式）"></a>HTTPGetAction（http方式）</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs INI">生产环境用的较多的方式，发送 HTTP 请求到容器内的应用程序，如果接口返回的状态码在 200~400 之间，则认为容器健康。<br><br>livenessProbe:<br>  failureThreshold: 5<br>  httpGet:<br>    path: /health<br>    port: 8080<br>    scheme: HTTP<br>    httpHeaders:<br>      - name: xxx<br>        value: xxx<br></code></pre></td></tr></table></figure>
+
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p><img src="C:\Users\刘惠涛\Desktop\叩丁狼-k8s\images\1742199651816.png" srcset="/img/loading.gif" lazyload alt="1742199651816"></p>
+<h2 id="Endpoints-实现容器地址转发可以用于项目迁移"><a href="#Endpoints-实现容器地址转发可以用于项目迁移" class="headerlink" title="Endpoints 实现容器地址转发可以用于项目迁移"></a>Endpoints 实现容器地址转发可以用于项目迁移</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs ini">可以通过ip访问<br>kubectl exec -it busybox -- sh<br>wget nginx-svc1<br><br>先创建一个svc把标签选择给删了 <br><span class="hljs-comment">#cat nginx-svc.yaml</span><br>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: nginx-svc1<br>  labels:<br>    app: nginxep<br>spec:<br>  ports:<br>  - port: 80<br>    name: web<br>    targetPort: 80<br>  此时svc  有但是ep是没有显示的<br>  <br><span class="hljs-comment">#cat nginx-svc-ep.yaml</span><br>apiVersion: v1<br>kind: Endpoints<br>metadata:<br>  labels:<br>    app: nginxep <span class="hljs-comment"># 与 service 一致</span><br>  name: nginx-svc1 <span class="hljs-comment"># 与 service 一致</span><br>subsets:<br>- addresses:<br>  - ip: 120.78.159.117 <span class="hljs-comment"># 目标 ip 地址</span><br>  ports: <span class="hljs-comment"># 与 service 一致</span><br>  - name: web <br>    port: 80<br>    protocol: TCP<br> <br> 此时ep就相当于一个代理代理到了120.78.159.117这个ip<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="ClusterIP-容器内部访问"><a href="#ClusterIP-容器内部访问" class="headerlink" title="ClusterIP 容器内部访问"></a>ClusterIP 容器内部访问</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># kubectl get svc</span><br>NAME             TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)   AGE<br>nginx            ClusterIP      10.104.207.42   &lt;none&gt;            80/TCP    36m<br><br>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: nginx<br>  labels:<br>    app: nginx<br>spec:<br>  ports:<br>  - port: 80<br>    name: web<br>    targetPort: 80<br>  type: ClusterIP <br>  selector:<br>    app: nginx-deploy<br>集群内部访问<br></code></pre></td></tr></table></figure>
+
+<h2 id="ExternalName（反向代理外部域名）"><a href="#ExternalName（反向代理外部域名）" class="headerlink" title="ExternalName（反向代理外部域名）"></a>ExternalName（反向代理外部域名）</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs ini">可以通过域名访问<br>kubectl exec -it busybox -- sh<br>wget nginx-extelner<br><span class="hljs-comment"># kubectl get svc</span><br>NAME             TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)   AGE<br>nginx-extelner   ExternalName   &lt;none&gt;          www.wolfcode.cn   80/TCP    10m<br><br>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: nginx-extelner<br>  labels:<br>    app: nginx<br>spec:<br>  ports:<br>  - port: 80<br>    name: web<br>    targetPort: 80<br>  type: ExternalName <br>  externalName: www.wolfcode.cn<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="NodePort-端口映射"><a href="#NodePort-端口映射" class="headerlink" title="NodePort(端口映射)"></a>NodePort(端口映射)</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs ini">可以对外访问 192.168.85.128:32237<br><span class="hljs-comment"># kubectl get svc</span><br>NAME             TYPE           CLUSTER-IP       EXTERNAL-IP       PORT(S)        AGE<br>nginx-svc        NodePort       10.108.184.225   &lt;none&gt;            80:32237/TCP   74s<br><br><span class="hljs-comment"># kubectl get ep</span><br>NAME         ENDPOINTS                       AGE<br>nginx-svc    10.244.1.49:80,10.244.2.63:80   83s<br><br>apiVersion: v1<br>kind: Service<br>metadata:<br>  name: nginx-svc<br>  labels:<br>    app: nginx<br>spec:<br>  ports:<br>  - port: 80<br>    name: web<br>    targetPort: 80<br>  type: NodePort<br>  selector:<br>    app: nginx-deploy<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="Ingress"><a href="#Ingress" class="headerlink" title="Ingress"></a>Ingress</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs ini">可以基于url对外访问<br>apiVersion: networking.k8s.io/v1<br>kind: Ingress <span class="hljs-comment"># 资源类型为 Ingress</span><br>metadata:<br>  name: nginx-ingress<br>  annotations:<br>    kubernetes.io/ingress.class: &quot;nginx&quot;<br>    <span class="hljs-comment">#nginx.ingress.kubernetes.io/rewrite-target: /</span><br>spec:<br>  rules: <span class="hljs-comment"># ingress 规则配置，可以配置多个</span><br>  - host: k8s.ingress.cn <span class="hljs-comment"># 域名配置，可以使用通配符 *</span><br>    http:<br>      paths: <span class="hljs-comment"># 相当于 nginx 的 location 配置，可以配置多个</span><br>      - pathType: Exact <span class="hljs-comment"># 路径类型，按照路径类型进行匹配 ImplementationSpecific 需要指定 IngressClass，具体匹配规则以 IngressClass 中的规则为准。Exact：精确匹配，URL需要与path完全匹配上，且区分大小写的。Prefix：以 / 作为分隔符来进行前缀匹配</span><br>        backend:<br>          service: <br>            name: nginx-svc <span class="hljs-comment"># 代理到哪个 service</span><br>            port: <br>              number: 80 <span class="hljs-comment"># service 的端口</span><br>        path: /api <span class="hljs-comment"># 等价于 nginx 中的 location 的路径前缀匹配</span><br>      - pathType: Prefix <span class="hljs-comment"># 路径类型，按照路径类型进行匹配 ImplementationSpecific 需要指定 IngressClass，具体匹配规则以 IngressClass 中的规则为准。Exact：精确匹配&gt;，URL需要与path完全匹配上，且区分大小写的。Prefix：以 / 作为分隔符来进行前缀匹配</span><br>        backend:<br>          service:<br>            name: nginx-svc <span class="hljs-comment"># 代理到哪个 service</span><br>            port:<br>              number: 80 <span class="hljs-comment"># service 的端口</span><br>        path: /<br><br><br>访问k8s.ingress.cn/api 能到nginx下面的api Exact永远优秀按匹配<br></code></pre></td></tr></table></figure>
+
+<h1 id="配置管理"><a href="#配置管理" class="headerlink" title="配置管理"></a>配置管理</h1><h2 id="configmap"><a href="#configmap" class="headerlink" title="configmap"></a>configmap</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs INI">首先创建一个cm    可以看kubectl create cm -h<br><br>apiVersion: apps/v1<br>kind: Deployment<br>metadata:<br>  labels:<br>    app: nginx-deploy<br>  name: nginx-deploy<br>spec:<br>  replicas: 1<br>  revisionHistoryLimit: 10<br>  selector:<br>    matchLabels:<br>      app: nginx-deploy<br>  strategy:<br>    rollingUpdate:<br>      maxSurge: 25%<br>      maxUnavailable: 25%<br>    type: RollingUpdate<br>  template:<br>    metadata:<br>      labels:<br>        app: nginx-deploy<br>    spec:<br>      initContainers:          <span class="hljs-comment">#初始化的操作</span><br>        - name: init-nginx<br>          image: busybox<br>          command: <span class="hljs-section">[&quot;sh&quot;, &quot;-c&quot;, &quot;mkdir -p /usr/share/nginx/api&quot;]</span> <br>      containers:<br>        - image: nginx:latest<br>          imagePullPolicy: IfNotPresent<br>          name: nginx<br>          volumeMounts:<br>            - name: nginx-default-config  <span class="hljs-comment">#需要和哪个cm绑定</span><br>              mountPath: /etc/nginx/conf.d/default.conf<br>              subPath: default.conf  <span class="hljs-comment"># 使得 ConfigMap 中的文件被挂载为 default.conf</span><br>            - name: nginx-default-config2<br>              mountPath: /usr/share/nginx/api/index.html <br>              subPath: index.html  <span class="hljs-comment"># 使得 ConfigMap 中的文件被挂载为 index.html</span><br>      restartPolicy: Always<br>      terminationGracePeriodSeconds: 30<br>      volumes:<br>        - name: nginx-default-config   <span class="hljs-comment">#需要和哪个cm绑定</span><br>          configMap:<br>            name: nginx-default-configmap <span class="hljs-comment"># 引用创建的 ConfigMap的name</span><br>        - name: nginx-default-config2<br>          configMap:<br>            name: nginx-index-config  <span class="hljs-comment"># 引用创建的 ConfigMap的name</span><br> <br> <br> 这样就可以实现在外面更改配置文件和index了<br> 重新加载操作 kubectl rollout restart deploy deploy-nginx<br></code></pre></td></tr></table></figure>
+
+<h1 id="持久化存储"><a href="#持久化存储" class="headerlink" title="持久化存储"></a>持久化存储</h1><h2 id="volumes"><a href="#volumes" class="headerlink" title="volumes"></a>volumes</h2><h3 id="hostpath（挂载到本机）"><a href="#hostpath（挂载到本机）" class="headerlink" title="hostpath（挂载到本机）"></a>hostpath（挂载到本机）</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: v1<br>kind: Pod<br>metadata:<br>  name: test-pd<br>spec:<br>  containers:<br>  - image: nginx:latest<br>    name: nginx-volume<br>    volumeMounts:<br>    - mountPath: /usr/share/nginx/html/index.html <span class="hljs-comment"># 挂载到容器的哪个文件</span><br>      name: test-volume <span class="hljs-comment"># 挂载哪个 volume</span><br>  volumes:<br>  - name: test-volume<br>    hostPath:<br>      path: /tmp/index.html <span class="hljs-comment"># 节点中的文件</span><br>      type: FileOrCreate <span class="hljs-comment"># 检查类型，在挂载前对挂载目录做什么检查操作，有多种选项，默认为空字符串，不做任何检查</span><br>      <br>      <br> 类型：<br>空字符串：默认类型，不做任何检查<br>DirectoryOrCreate：如果给定的 path 不存在，就创建一个 755 的空目录<br>Directory：这个目录必须存在<br>FileOrCreate：如果给定的文件不存在，则创建一个空文件，权限为 644<br>File：这个文件必须存在<br>Socket：UNIX 套接字，必须存在<br>CharDevice：字符设备，必须存在<br>BlockDevice：块设备，必须存在<br></code></pre></td></tr></table></figure>
+
+<h3 id="emptydir（）空目录"><a href="#emptydir（）空目录" class="headerlink" title="emptydir（）空目录"></a>emptydir（）空目录</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: v1<br>kind: Pod<br>metadata:<br>  name: test-pd<br>spec:<br>  containers:<br>  - image: nginx<br>    name: nginx-emptydir<br>    volumeMounts:<br>    - mountPath: /cache   <span class="hljs-comment"># 将 Volume 挂载到容器内的路径 /cache</span><br>      name: cache-volume  <span class="hljs-comment"># 使用的 Volume 名称</span><br>  volumes:<br>  - name: cache-volume   <span class="hljs-comment"># 定义的 Volume 名称</span><br>    emptyDir: &#123;&#125;          <span class="hljs-comment"># emptyDir 类型的 Volume</span><br>    <br>    <br>emptyDir 的特点：<br>emptyDir 是一种空目录，生命周期与 Pod 绑定。<br>在容器启动时，Kubernetes 会在节点上为 Pod 创建一个空的目录，并将该目录挂载到容器的指定路径。<br>如果 Pod 中的容器写入文件，它们会被写入 emptyDir，并且这个文件对于 Pod 中所有容器是共享的。<br>当 Pod 被删除时，emptyDir 中的内容也会丢失。<br>emptyDir 不适合长期存储数据，因为它不会在 Pod 重启或删除后保留数据。<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="nfs方式"><a href="#nfs方式" class="headerlink" title="nfs方式"></a>nfs方式</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: v1<br>kind: Pod<br>metadata:<br>  name: nfs-pd<br>spec:<br>  containers:<br>  - image: nginx:latest<br>    name: test-container1<br>    volumeMounts:<br>    - mountPath: /usr/share/nginx/html/<br>      name: test-volume<br>  volumes:<br>  - name: test-volume<br>    nfs:<br>      server: 192.168.85.130 <span class="hljs-comment"># 网络存储服务地址</span><br>      path: /data/nfs/rw/a <span class="hljs-comment"># 网络存储路径</span><br>      readOnly: false <span class="hljs-comment"># 是否只读</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="pv与pvc"><a href="#pv与pvc" class="headerlink" title="pv与pvc"></a>pv与pvc</h2><h3 id="静态构建"><a href="#静态构建" class="headerlink" title="静态构建"></a>静态构建</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs ini">先创建一个pv<br>apiVersion: v1<br>kind: PersistentVolume<br>metadata:<br>  name: pv001<br>spec:<br>  capacity:<br>    storage: 5Gi <span class="hljs-comment"># pv 的容量</span><br>  volumeMode: Filesystem <span class="hljs-comment"># 存储类型为文件系统</span><br>  accessModes: <span class="hljs-comment"># 访问模式：ReadWriteOnce、ReadWriteMany、ReadOnlyMany</span><br>    - ReadWriteOnce <span class="hljs-comment"># 可被单节点独写</span><br>  persistentVolumeReclaimPolicy: Recycle <span class="hljs-comment"># 回收策略</span><br>  storageClassName: test <span class="hljs-comment"># 创建 PV 的存储类名，需要与 pvc 的相同</span><br>  mountOptions: <span class="hljs-comment"># 加载配置</span><br>    - hard<br>    - <span class="hljs-attr">nfsvers</span>=<span class="hljs-number">4.1</span><br>  nfs: <span class="hljs-comment"># 连接到 nfs</span><br>    path: /data/nfs/rw/pvc <span class="hljs-comment"># 存储路径</span><br>    server: 192.168.85.130 <span class="hljs-comment"># nfs 服务地址</span><br>-----------------------------<br>-----------------------------<br>再创建一个pvc<br>apiVersion: v1<br>kind: PersistentVolumeClaim<br>metadata:<br>  name: nfs-pvc<br>spec:<br>  accessModes:<br>    - ReadWriteOnce <span class="hljs-comment"># 权限需要与对应的 pv 相同</span><br>  volumeMode: Filesystem<br>  resources:<br>    requests:<br>      storage: 1Gi <span class="hljs-comment"># 资源可以小于 pv 的，但是不能大于，如果大于就会匹配不到 pv</span><br>  storageClassName: test<br>-----------------------------<br>-----------------------------<br>此时pvc和pv已经绑定好了<br>再创建一个pod与pvc关联<br>apiVersion: v1<br>kind: Pod<br>metadata:<br>  name: pvc-test <br>spec:<br>  containers:<br>  - image: nginx:latest<br>    name: test-container1<br>    volumeMounts:<br>    - mountPath: /tmp/pvc <br>      name: nfs-pvc-test<br>  volumes:<br>  - name: nfs-pvc-test<br>    persistentVolumeClaim:<br>      claimName: nfs-pvc <span class="hljs-comment"># pvc 的名称</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="动态构建"><a href="#动态构建" class="headerlink" title="动态构建"></a>动态构建</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><code class="hljs ini">vim rbac.yaml<br>apiVersion: v1<br>kind: ServiceAccount<br>metadata:<br>  name: nfs-client-provisioner<br>  <span class="hljs-comment"># replace with namespace where provisioner is deployed</span><br>  namespace: default        <span class="hljs-comment">#根据实际环境设定namespace,下面类同</span><br>---<br>kind: ClusterRole<br>apiVersion: rbac.authorization.k8s.io/v1<br>metadata:<br>  name: nfs-client-provisioner-runner<br>rules:<br>  - apiGroups: <span class="hljs-section">[&quot;&quot;]</span><br>    resources: <span class="hljs-section">[&quot;persistentvolumes&quot;]</span><br>    verbs: <span class="hljs-section">[&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;delete&quot;]</span><br>  - apiGroups: <span class="hljs-section">[&quot;&quot;]</span><br>    resources: <span class="hljs-section">[&quot;persistentvolumeclaims&quot;]</span><br>    verbs: <span class="hljs-section">[&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;update&quot;]</span><br>  - apiGroups: <span class="hljs-section">[&quot;storage.k8s.io&quot;]</span><br>    resources: <span class="hljs-section">[&quot;storageclasses&quot;]</span><br>    verbs: <span class="hljs-section">[&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;]</span><br>  - apiGroups: <span class="hljs-section">[&quot;&quot;]</span><br>    resources: <span class="hljs-section">[&quot;events&quot;]</span><br>    verbs: <span class="hljs-section">[&quot;create&quot;, &quot;update&quot;, &quot;patch&quot;]</span><br>---<br>kind: ClusterRoleBinding<br>apiVersion: rbac.authorization.k8s.io/v1<br>metadata:<br>  name: run-nfs-client-provisioner<br>subjects:<br>  - kind: ServiceAccount<br>    name: nfs-client-provisioner<br>    <span class="hljs-comment"># replace with namespace where provisioner is deployed</span><br>    namespace: default<br>roleRef:<br>  kind: ClusterRole<br>  name: nfs-client-provisioner-runner<br>  apiGroup: rbac.authorization.k8s.io<br>---<br>kind: Role<br>apiVersion: rbac.authorization.k8s.io/v1<br>metadata:<br>  name: leader-locking-nfs-client-provisioner<br>    <span class="hljs-comment"># replace with namespace where provisioner is deployed</span><br>  namespace: default<br>rules:<br>  - apiGroups: <span class="hljs-section">[&quot;&quot;]</span><br>    resources: <span class="hljs-section">[&quot;endpoints&quot;]</span><br>    verbs: <span class="hljs-section">[&quot;get&quot;, &quot;list&quot;, &quot;watch&quot;, &quot;create&quot;, &quot;update&quot;, &quot;patch&quot;]</span><br>---<br>kind: RoleBinding<br>apiVersion: rbac.authorization.k8s.io/v1<br>metadata:<br>  name: leader-locking-nfs-client-provisioner<br>subjects:<br>  - kind: ServiceAccount<br>    name: nfs-client-provisioner<br>    <span class="hljs-comment"># replace with namespace where provisioner is deployed</span><br>    namespace: default<br>roleRef:<br>  kind: Role<br>  name: leader-locking-nfs-client-provisioner<br>  apiGroup: rbac.authorization.k8s.io<br><br><br>3、创建sc<br>apiVersion: storage.k8s.io/v1<br>kind: StorageClass<br>metadata:<br>  name: managed-nfs-storage<br>provisioner: tigerfive-nfs-storage <span class="hljs-comment">#这里的名称要和provisioner配置文件中的环境变量PROVISIONER_NAME保持一致</span><br>parameters:  <br>  archiveOnDelete: &quot;false&quot;<br><br><br>4、创建 提供者<br>apiVersion: apps/v1<br>kind: Deployment<br>metadata:<br>  name: nfs-client-provisioner<br>  labels:<br>    app: nfs-client-provisioner<br>  <span class="hljs-comment"># replace with namespace where provisioner is deployed</span><br>  namespace: default  <span class="hljs-comment">#与RBAC文件中的namespace保持一致</span><br>spec:<br>  replicas: 1<br>  selector:<br>    matchLabels:<br>      app: nfs-client-provisioner<br>  strategy:<br>    type: Recreate<br>  selector:<br>    matchLabels:<br>      app: nfs-client-provisioner<br>  template:<br>    metadata:<br>      labels:<br>        app: nfs-client-provisioner<br>    spec:<br>      serviceAccountName: nfs-client-provisioner<br>      containers:<br>        - name: nfs-client-provisioner<br>          image: registry.cn-beijing.aliyuncs.com/pylixm/nfs-subdir-external-provisioner:v4.0.0<br>          volumeMounts:<br>            - name: nfs-client-root<br>              mountPath: /persistentvolumes<br>          env:<br>            - name: PROVISIONER_NAME<br>              value: tigerfive-nfs-storage  <span class="hljs-comment">#provisioner名称,请确保该名称与 nfs-StorageClass.yaml文件中的provisioner名称保持一致</span><br>            - name: NFS_SERVER<br>              value: 192.168.81.140   <span class="hljs-comment">#NFS Server IP地址</span><br>            - name: NFS_PATH  <br>              value: /data/nfs   <span class="hljs-comment">#NFS挂载卷</span><br>      volumes:<br>        - name: nfs-client-root<br>          nfs:<br>            server: 192.168.81.140  <span class="hljs-comment">#NFS Server IP地址</span><br>            path: /data/nfs     <span class="hljs-comment">#NFS 挂载卷</span><br><br><br>--------------------------------------------------------<br><span class="hljs-comment"># kubectl get pv</span><br>No resources found<br><span class="hljs-comment"># kubectl get pvc</span><br>No resources found<br><br>直接创建pvc，并且pod使用该pvc<br><br>apiVersion: v1<br>kind: PersistentVolumeClaim<br>metadata:<br>  name: test-claim<br>  annotations:<br>    volume.beta.kubernetes.io/storage-class: &quot;managed-nfs-storage&quot;   <span class="hljs-comment">#与nfs-StorageClass.yaml metadata.name保持一致</span><br>spec:<br>  accessModes:<br>    - ReadWriteMany<br>  resources:<br>    requests:<br>      storage: 1Mi<br><br><br><span class="hljs-comment"># kubectl get pv</span><br>NAME                                       CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                STORAGECLASS          REASON   AGE<br>pvc-fd443294-78e7-40ba-a27a-1d000ab92d2c   1Mi        RWX            Delete           Bound    default/test-claim   managed-nfs-storage            27s<br><span class="hljs-comment"># kubectl get pvc</span><br>NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS          AGE<br>test-claim   Bound    pvc-fd443294-78e7-40ba-a27a-1d000ab92d2c   1Mi        RWX            managed-nfs-storage   28s<br><br><br>创建pod使用svc<br>kind: Pod<br>apiVersion: v1<br>metadata:<br>  name: test-pod<br>spec:<br>  containers:<br>  - name: test-pod<br>    image: busybox:1.24<br>    command:<br>      - &quot;/bin/sh&quot;<br>    args:<br>      - &quot;-c&quot;<br>      - &quot;touch /mnt/SUCCESS &amp;&amp; exit 0 || exit 1&quot;   <span class="hljs-comment">#创建一个SUCCESS文件后退出</span><br>    volumeMounts:<br>      - name: nfs-pvc<br>        mountPath: &quot;/mnt&quot;<br>  restartPolicy: &quot;Never&quot;<br>  volumes:<br>    - name: nfs-pvc<br>      persistentVolumeClaim:<br>        claimName: test-claim  <span class="hljs-comment">#与PVC名称保持一致</span><br><br><br>检查nfs的目录<br><span class="hljs-section">[root@storage1 ~]</span><span class="hljs-comment"># ls /data/nfs/default-test-claim-pvc-fd443294-78e7-40ba-a27a-1d000ab92d2c/</span><br>SUCCESS<br><br></code></pre></td></tr></table></figure>
+
+<h1 id="高级调度"><a href="#高级调度" class="headerlink" title="高级调度"></a>高级调度</h1><h2 id="定时任务cronjob"><a href="#定时任务cronjob" class="headerlink" title="定时任务cronjob"></a>定时任务cronjob</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: batch/v1<br>kind: CronJob<br>metadata:<br>  name: hello<br>spec:<br>  concurrencyPolicy: Allow <span class="hljs-comment"># 并发调度策略：Allow 允许并发调度，Forbid：不允许并发执行，Replace：如果之前的任务还没执行完，就直接执行新的，放弃上一个任务</span><br>  failedJobsHistoryLimit: 1 <span class="hljs-comment"># 保留多少个失败的任务</span><br>  successfulJobsHistoryLimit: 3 <span class="hljs-comment"># 保留多少个成功的任务</span><br>  suspend: false <span class="hljs-comment"># 是否挂起任务，若为 true 则该任务不会执行</span><br><span class="hljs-comment">#  startingDeadlineSeconds: 30 # 间隔多长时间检测失败的任务并重新执行，时间不能小于 10</span><br>  schedule: &quot;* * * * *&quot; <span class="hljs-comment"># 调度策略</span><br>  jobTemplate:<br>    spec:<br>      template:<br>        spec:<br>          containers:<br>          - name: hello<br>            image: busybox:latest<br>            imagePullPolicy: IfNotPresent<br>            command:<br>            - /bin/sh<br>            - -c<br>            - date<span class="hljs-comment">; echo Hello from the Kubernetes cluster</span><br>          restartPolicy: OnFailure   <span class="hljs-comment">#失败则重启（非0）</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="初始化容器"><a href="#初始化容器" class="headerlink" title="初始化容器"></a>初始化容器</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ini">在真正的容器启动之前，先启动 InitContainer，在初始化容器中完成真实容器所需的初始化操作，完成后再启动真实的容器。<br><br>相对于 postStart 来说，首先 InitController 能够保证一定在 EntryPoint 之前执行，而 postStart 不能，其次 postStart 更适合去执行一些命令操作，而 InitController 实际就是一个容器，可以在其他基础容器环境下执行更复杂的初始化功能。<br><br>在 pod 创建的模板中配置 initContainers 参数：<br>spec:<br>  initContainers:<br>  - image: nginx<br>    imagePullPolicy: IfNotPresent<br>    command: <span class="hljs-section">[&quot;sh&quot;, &quot;-c&quot;, &quot;echo &#x27;inited;&#x27; &gt;&gt; ~/.init&quot;]</span><br>    name: init-test<br>    <br>    <br>    <br>    初始化的话做好配合持久化存储 pod中的两个容器默认不会共享数据<br></code></pre></td></tr></table></figure>
+
+<h2 id="容忍和污点"><a href="#容忍和污点" class="headerlink" title="容忍和污点"></a>容忍和污点</h2><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ini"> NoSchedule 不能容忍但是已经部署在pod不会被删除   NoExecute 可以容忍但是没有对应的id或者 id和value 会被删除<br> <br> <span class="hljs-comment">#kubectl describe no k8s-node2 #查看污点</span><br> 首先创建个标签<br> <span class="hljs-comment">#kubctl  label no k8s-node2  memory=low     如果有就--overwrite</span><br> 给节点打上污点<br> <span class="hljs-comment">#kubectl taint no k8s-node2  memory=log:NoSchedule    </span><br> <br> <span class="hljs-comment"># pod 的 spec 下面配置容忍</span><br>tolerations:<br>- key: &quot;memory&quot;<br>  value: &quot;low&quot;<br>  effect: &quot;NoSchedule&quot; <span class="hljs-comment"># 能容忍的污点</span><br>  operator: &quot;Equal&quot; <span class="hljs-comment"># 表是 value 与污点的 value 要相等，也可以设置为 Exists 表示存在 key 即可，此时可以不配置 value</span><br>  <br></code></pre></td></tr></table></figure>
+
+<h2 id="亲和信"><a href="#亲和信" class="headerlink" title="亲和信"></a>亲和信</h2><h3 id="node"><a href="#node" class="headerlink" title="node"></a>node</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: v1<br>kind: Pod<br>metadata:<br>  name: with-node-affinity<br>spec:<br>  affinity: <span class="hljs-comment"># 亲和力配置</span><br>    nodeAffinity: <span class="hljs-comment"># 节点亲和力</span><br>      requiredDuringSchedulingIgnoredDuringExecution: <span class="hljs-comment"># 节点必须匹配下方配置</span><br>        nodeSelectorTerms: <span class="hljs-comment"># 选择器</span><br>        - matchExpressions: <span class="hljs-comment"># 匹配表达式</span><br>          - key: test <span class="hljs-comment"># 匹配 label 的 key</span><br>            operator: In <span class="hljs-comment"># 匹配方式，只要匹配成功下方的一个 value 即可</span><br>            values:<br>            - &quot;1&quot; <span class="hljs-comment"># 匹配的 value</span><br>      preferredDuringSchedulingIgnoredDuringExecution: <span class="hljs-comment"># 节点尽量匹配下方配置</span><br>      - weight: 1 <span class="hljs-comment"># 权重[1,100]，按照匹配规则对所有节点累加权重，最终之和会加入优先级评分，优先级越高被调度的可能性越高</span><br>        preference:<br>          matchExpressions: <span class="hljs-comment"># 匹配表达式</span><br>          - key: cpu <span class="hljs-comment"># label 的 key</span><br>            operator: In <span class="hljs-comment"># 匹配方式，满足一个即可</span><br>            values:<br>            - good <span class="hljs-comment"># 匹配的 value</span><br>  containers:<br>  - name: with-node-affinity<br>    image: nginx:1.2.1 <br>    imagePullPolicy: IfNotPresent <br>    <br></code></pre></td></tr></table></figure>
+
+<h3 id="pod-1"><a href="#pod-1" class="headerlink" title="pod"></a>pod</h3><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs ini">apiVersion: v1<br>kind: Pod<br>metadata:<br>  name: with-pod-affinity<br>spec:<br>  affinity: <span class="hljs-comment"># 亲和力配置</span><br>    podAffinity: <span class="hljs-comment"># pod 亲和力配置</span><br>      requiredDuringSchedulingIgnoredDuringExecution: <span class="hljs-comment"># 当前 pod 必须匹配到对应条件 pod 所在的 node 上</span><br>      - labelSelector: <span class="hljs-comment"># 标签选择器</span><br>          matchExpressions: <span class="hljs-comment"># 匹配表达式</span><br>          - key: security <span class="hljs-comment"># 匹配的 key</span><br>            operator: In <span class="hljs-comment"># 匹配方式</span><br>            values: <span class="hljs-comment"># 匹配其中的一个 value</span><br>            - S1<br>        topologyKey: topology.kubernetes.io/zone<br>    podAntiAffinity: <span class="hljs-comment"># pod 反亲和力配置</span><br>      preferredDuringSchedulingIgnoredDuringExecution: <span class="hljs-comment"># 尽量不要将当前节点部署到匹配下列参数的 pod 所在的 node 上</span><br>      - weight: 100 <span class="hljs-comment"># 权重</span><br>        podAffinityTerm: <span class="hljs-comment"># pod 亲和力配置条件</span><br>          labelSelector: <span class="hljs-comment"># 标签选择器</span><br>            matchExpressions: <span class="hljs-comment"># 匹配表达式</span><br>            - key: security <span class="hljs-comment"># 匹配的 key</span><br>              operator: In <span class="hljs-comment"># 匹配的方式</span><br>              values:<br>              - S2 <span class="hljs-comment"># 匹配的 value</span><br>          topologyKey: topology.kubernetes.io/zone<br>  containers:<br>  - name: with-pod-affinity<br>    image: pause:2.0<br></code></pre></td></tr></table></figure>
+
+
+
+<h1 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h1><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs ini">kubectl delete pods --all  --force <span class="hljs-attr">--grace-period</span>=<span class="hljs-number">0</span><br><span class="hljs-comment">#强制删除所有pod</span><br>kubectl label po nginx <span class="hljs-attr">app</span>=hello<br><span class="hljs-comment">#临时创建标签</span><br>kubectl label po nginx <span class="hljs-attr">app</span>=hello2 --overwrite<br><span class="hljs-comment">#给标签重命名</span><br>kubectl label po nginx --show-labels<br><span class="hljs-comment">#查看标签</span><br>kubectl get po -A -l <span class="hljs-attr">app</span>=hello<br><span class="hljs-comment">#按照标签查找所匹配的pod</span><br>kubectl get po -A -l &#x27;k8s-app in (metrics-server, kubernetes-dashboard)&#x27;<br><span class="hljs-comment">#匹配多个值</span><br>kubectl get po -l version!=1,<span class="hljs-attr">app</span>=nginx<br><span class="hljs-comment">#查找 version!=1 and app=nginx 的 pod 信息</span><br>kubectl get po -A -l version!=1,&#x27;app in (busybox, nginx)&#x27;<br><span class="hljs-comment">#不等值 + 语句</span><br>kubectl run -i --tty --image busybox dns-test <span class="hljs-attr">--restart</span>=Never --rm /bin/sh 跑busybox不退出<br><br></code></pre></td></tr></table></figure>
+
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/k8s/" class="category-chain-item">k8s</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/k8s/" class="print-no-link">#k8s</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>k8s笔记</div>
+      <div>https://www.tiantian123.asia/2025/05/26/K8S笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>lht</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2025年5月26日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2025/05/26/%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/" title="内网穿透">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">内网穿透</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2025/04/25/CICD/" title="CICD">
+                        <span class="hidden-mobile">CICD</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+<div>
+  <span id="timeDate">正在载入天数...</span>
+  <span id="times">载入时分秒...</span>
+  <script>
+  var now = new Date();
+  function createtime(){
+      var grt= new Date("08/17/2020 00:00:00");
+      now.setTime(now.getTime()+250);
+      days = (now - grt ) / 1000 / 60 / 60 / 24;
+      dnum = Math.floor(days);
+      hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+      hnum = Math.floor(hours);
+      if(String(hnum).length ==1 ){
+          hnum = "0" + hnum;
+      }
+      minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+      mnum = Math.floor(minutes);
+      if(String(mnum).length ==1 ){
+                mnum = "0" + mnum;
+      }
+      seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+      snum = Math.round(seconds);
+      if(String(snum).length ==1 ){
+                snum = "0" + snum;
+      }
+      document.getElementById("timeDate").innerHTML = "\u{1F680} 已持续航行&nbsp"+dnum+"&nbsp天";  
+      document.getElementById("times").innerHTML = hnum + "&nbsp时&nbsp" + mnum + "&nbsp分&nbsp" + snum + "&nbsp秒";
+  }
+  setInterval("createtime()",250);
+  </script>
+</div>
+
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  
+<script src="/js/stars.js"></script>
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
