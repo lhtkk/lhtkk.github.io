@@ -284,6 +284,12 @@ sup > a::before,
 .footnote-text {
   padding-left: 0.5em;
 }
+.navbar-title {
+  outline: none;
+  --c: #20b2aa;
+  text-shadow: 0 0 10px var(--c), 0 0 20px var(--c), 0 0 40px var(--c), 0 0 80px var(--c), 0 0 160px var(--c);
+  animation: animate 5s linear infinite;
+}
 .navbar {
   background-color: transparent;
   font-size: 0.875rem;
@@ -463,6 +469,26 @@ sup > a::before,
   #subtitle,
   .typed-cursor {
     font-size: 1.35rem;
+  }
+}
+@-moz-keyframes animate {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+@-webkit-keyframes animate {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+@-o-keyframes animate {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+@keyframes animate {
+  to {
+    filter: hue-rotate(360deg);
   }
 }
 .modal-dialog .modal-content {
